@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import {AuthGuard} from './auth/auth.guard';
 import {DashboardComponent} from './admin/dashboard/dashboard.component';
+import { UnauthorizedComponent } from './util/unauthorized/unauthorized.component';
+import { HomeComponent } from './user/home/home.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +18,16 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { role: 'admin' }
+  },{
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'guest' }
+  },
+  {
+    path: 'unauthorized',
+    component: UnauthorizedComponent
   }
 ];

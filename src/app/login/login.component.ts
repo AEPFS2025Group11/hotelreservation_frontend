@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +13,7 @@ import {NgIf} from '@angular/common';
 export class LoginComponent {
   email = '';
   password = '';
+  private errorMessage: string | undefined;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -33,19 +33,20 @@ export class LoginComponent {
 
 
   onSubmit() {
-    const credentials = {
-      email: this.email,
-      password: this.password
-    };
+    const credentials = {email: this.email, password: this.password};
 
     this.authService.login(credentials).subscribe({
-      next: (res: any) => {
-        this.authService.loginSuccess(res.access_token);
-        this.router.navigate(['/dashboard']).then();
+      next: (response) => {
+        const role = response.user.roles[0]; // oder find(...) bei mehreren Rollen
+
+        if (role === 'admin') {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/home']);
+        }
       },
-      error: (err) => {
-        alert('Login fehlgeschlagen');
-        console.error(err);
+      error: err => {
+        this.errorMessage = err.error.detail || 'Login fehlgeschlagen';
       }
     });
   }

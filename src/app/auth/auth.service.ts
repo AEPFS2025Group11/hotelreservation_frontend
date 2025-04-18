@@ -1,35 +1,57 @@
-import { HttpClient } from '@angular/common/http';
+// auth.service.ts
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import {BehaviorSubject, map, Observable} from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+interface User {
+  email: string;
+  roles: string[];
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'http://localhost:5049/api/auth';
-
-  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
-  isLoggedIn$ = this.loggedIn.asObservable();
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  private hasToken(): boolean {
-    return !!localStorage.getItem('access_token');
+  login(credentials: { email: string; password: string }): Observable<any> {
+    return this.http.post<{ token: string; user: User }>('http://localhost:5049/api/auth/login', credentials).pipe(
+      tap(response => {
+        localStorage.setItem('token', response.token);
+        this.currentUserSubject.next(response.user);
+      })
+    );
   }
 
-  login(credentials: { email: string; password: string }) {
-    return this.http.post<{ access_token: string }>(`${this.baseUrl}/login`, credentials);
-  }
-
-  loginSuccess(token: string) {
-    localStorage.setItem('access_token', token);
-    this.loggedIn.next(true);
-  }
-
-  logout() {
-    localStorage.removeItem('access_token');
-    this.loggedIn.next(false);
-  }
+  isLoggedIn$ = this.currentUser$.pipe(
+    map(user => !!user)
+  );
 
   getToken(): string | null {
-    return localStorage.getItem('access_token');
+    return localStorage.getItem('token');
+  }
+
+  getCurrentUser(): User | null {
+    return this.currentUserSubject.value;
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    this.currentUserSubject.next(null);
+  }
+
+  loginSuccess(access_token: any) {
+    localStorage.setItem('token', access_token);
+
+    const payload = JSON.parse(atob(access_token.split('.')[1]));
+
+    const user = {
+      email: payload.email || 'unbekannt',
+      roles: [payload.role]
+    };
+
+    this.currentUserSubject.next(user);
   }
 }
