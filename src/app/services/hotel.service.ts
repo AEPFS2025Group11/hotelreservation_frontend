@@ -12,20 +12,36 @@ export class HotelService {
   constructor(private http: HttpClient) {}
 
   searchHotels(filters: {
-    city: string;
-    minStars: number;
-    guests: number;
-    checkIn: string;
-    checkOut: string;
+    city?: string;
+    minStars?: number;
+    guests?: number;
+    checkIn?: string;
+    checkOut?: string;
   }): Observable<Hotel[]> {
-    let params = new HttpParams()
-      .set('city', filters.city)
-      .set('min_stars', filters.minStars.toString())
-      .set('capacity', filters.guests.toString())
-      .set('check_in', filters.checkIn)
-      .set('check_out', filters.checkOut);
+    let params = new HttpParams();
+
+    if (filters.city) {
+      params = params.set('city', filters.city);
+    }
+
+    if (filters.minStars !== undefined && filters.minStars !== null) {
+      params = params.set('min_stars', filters.minStars.toString());
+    }
+
+    if (filters.guests !== undefined && filters.guests !== null) {
+      params = params.set('capacity', filters.guests.toString());
+    }
+
+    if (filters.checkIn) {
+      params = params.set('check_in', filters.checkIn);
+    }
+
+    if (filters.checkOut) {
+      params = params.set('check_out', filters.checkOut);
+    }
 
     return this.http.get<Hotel[]>(this.apiUrl, { params });
   }
+
 
 }

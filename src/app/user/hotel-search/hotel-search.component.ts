@@ -1,42 +1,34 @@
-import {Component} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {Hotel} from '../../models/hotel.model';
-import {HotelService} from '../../services/hotel.service';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Hotel } from '../../models/hotel.model';
+import { HotelService } from '../../services/hotel.service';
 
 @Component({
   selector: 'app-hotel-search',
-  imports: [
-    FormsModule,
-    CommonModule
-  ],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './hotel-search.component.html'
 })
 export class HotelSearchComponent {
-  city = '';
-  minStars = 0;
-  guests = 1;
+  city: string = '';
+  minStars: number | null = null;
+  guests: number | null = null;
   checkInDate: string = '';
   checkOutDate: string = '';
 
   filteredHotels: Hotel[] = [];
   error: string | null = null;
 
-  constructor(private hotelService: HotelService) {
-  }
+  constructor(private hotelService: HotelService) {}
 
   search() {
-    if (!this.city || !this.checkInDate || !this.checkOutDate) {
-      this.error = 'Bitte alle Pflichtfelder ausfüllen.';
-      return;
-    }
-
     this.hotelService.searchHotels({
-      city: this.city,
-      minStars: this.minStars,
-      guests: this.guests,
-      checkIn: this.checkInDate,
-      checkOut: this.checkOutDate
+      city: this.city || undefined,
+      minStars: this.minStars ?? undefined,
+      guests: this.guests ?? undefined,
+      checkIn: this.checkInDate || undefined,
+      checkOut: this.checkOutDate || undefined
     }).subscribe({
       next: (hotels) => {
         this.filteredHotels = hotels;
