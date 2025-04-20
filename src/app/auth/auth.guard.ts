@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
     const user = this.authService.getCurrentUser();
     const requiredRole = route.data['role'];
 
-    if (user && user.roles.includes(requiredRole)) {
+    if (user && user.role.includes(requiredRole)) {
       return true;
     }
 

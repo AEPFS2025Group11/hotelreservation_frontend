@@ -3,21 +3,27 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {BehaviorSubject, map, Observable} from 'rxjs';
 import { tap } from 'rxjs/operators';
-
-interface User {
-  email: string;
-  roles: string[];
-}
+import {AuthResponse, LoginRequest, RegisterRequest, User} from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post<{ token: string; user: User }>('http://localhost:5049/api/auth/login', credentials).pipe(
+  login(loginRequest: LoginRequest): Observable<any> {
+    return this.http.post<AuthResponse>('http://localhost:5049/api/auth/login', loginRequest).pipe(
+      tap(response => {
+        localStorage.setItem('token', response.token);
+        this.currentUserSubject.next(response.user);
+      })
+    );
+  }
+
+  register(registerRequest: RegisterRequest) {
+    return this.http.post<AuthResponse>('http://localhost:5049/api/auth/register', registerRequest).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
         this.currentUserSubject.next(response.user);
@@ -49,7 +55,7 @@ export class AuthService {
 
     const user = {
       email: payload.email || 'unbekannt',
-      roles: [payload.role]
+      role: payload.role
     };
 
     this.currentUserSubject.next(user);

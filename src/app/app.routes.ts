@@ -4,6 +4,7 @@ import {AuthGuard} from './auth/auth.guard';
 import {DashboardComponent} from './admin/dashboard/dashboard.component';
 import { UnauthorizedComponent } from './util/unauthorized/unauthorized.component';
 import { HomeComponent } from './user/home/home.component';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
   {
@@ -14,6 +15,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },  {
+    path: 'register',
+    component: RegisterComponent
   },
   {
     path: 'dashboard',
@@ -23,8 +27,8 @@ export const routes: Routes = [
   },{
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard],
-    data: { role: 'guest' }
+    // canActivate: [AuthGuard],
+    // data: { role: 'guest' }
   },
   {
     path: 'unauthorized',

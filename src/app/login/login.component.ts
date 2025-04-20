@@ -37,7 +37,7 @@ export class LoginComponent {
 
     this.authService.login(credentials).subscribe({
       next: (response) => {
-        const role = response.user.roles[0]; // oder find(...) bei mehreren Rollen
+        const role = response.user.roles[0];
 
         if (role === 'admin') {
           this.router.navigate(['/dashboard']);
@@ -49,5 +49,9 @@ export class LoginComponent {
         this.errorMessage = err.error.detail || 'Login fehlgeschlagen';
       }
     });
+  }
+
+  navigateToRegister() {
+    this.router.navigate(['/register']);
   }
 }
