@@ -1,0 +1,17 @@
+<h2 class="text-2xl font-bold mb-4">Hotel Details</h2>
+
+<div class="flex gap-4 mb-4">
+  <input type="date" [(ngModel)]="checkInDate" class="border rounded p-2" />
+  <input type="date" [(ngModel)]="checkOutDate" class="border rounded p-2" />
+  <button (click)="loadRooms()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+    Verfügbarkeit prüfen
+  </button>
+</div>
+
+<div *ngIf="error" class="text-red-600">{{ error }}</div>
+
+<div *ngIf="rooms.length === 0 && !error" class="text-gray-500">Keine Zimmer gefunden</div>
+
+<div class="grid md:grid-cols-2 gap-4">
+  <app-room-card *ngFor="let room of rooms" [room]="room" />
+</div>

@@ -1,0 +1,21 @@
+<div class="p-4 border rounded shadow">
+  <h4 class="text-lg font-bold">Zimmer {{ room.room_number }}</h4>
+  <p><strong>Typ:</strong> {{ room.type.description }}</p>
+  <p><strong>Max. Gäste:</strong> {{ room.type.max_guests }}</p>
+
+  <p><strong>Ausstattung:</strong>
+    <span *ngFor="let facility of room.facilities; let last = last">
+      {{ facility.facility_name }}<span *ngIf="!last">, </span>
+    </span>
+  </p>
+
+  <p><strong>Preis/Nacht:</strong>
+    {{ room.dynamic_price_per_night ?? room.price_per_night }}
+  </p>
+
+  <p *ngIf="room.total_price"><strong>Gesamtpreis:</strong> {{ room.total_price }}</p>
+
+  <p *ngIf="room.total_price === undefined" class="text-gray-500 italic">
+    Bitte Zeitraum wählen, um Gesamtpreis zu sehen
+  </p>
+</div>

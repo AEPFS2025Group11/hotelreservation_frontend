@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Hotel } from '../../models/hotel.model';
-import { HotelService } from '../../services/hotel.service';
+import { Hotel } from '../../../models/hotel.model';
+import { HotelService } from '../../../services/hotel.service';
 
 @Component({
   selector: 'app-hotel-search',
@@ -10,7 +10,7 @@ import { HotelService } from '../../services/hotel.service';
   imports: [FormsModule, CommonModule],
   templateUrl: './hotel-search.component.html'
 })
-export class HotelSearchComponent {
+export class HotelSearchComponent implements OnInit {
   city: string = '';
   minStars: number | null = null;
   guests: number | null = null;
@@ -22,7 +22,11 @@ export class HotelSearchComponent {
 
   constructor(private hotelService: HotelService) {}
 
-  search() {
+  ngOnInit(): void {
+    this.search();
+  }
+
+  search(): void {
     this.hotelService.searchHotels({
       city: this.city || undefined,
       minStars: this.minStars ?? undefined,
