@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { Hotel } from '../../../models/hotel.model';
-import { HotelService } from '../../../services/hotel.service';
+import {Component, inject, OnInit} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {Hotel} from '../../../models/hotel.model';
+import {HotelService} from '../../../services/hotel.service';
+import {HotelCardComponent} from '../hotel-card/hotel-card.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-hotel-search',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, HotelCardComponent],
   templateUrl: './hotel-search.component.html'
 })
 export class HotelSearchComponent implements OnInit {
@@ -20,11 +22,14 @@ export class HotelSearchComponent implements OnInit {
   filteredHotels: Hotel[] = [];
   error: string | null = null;
 
-  constructor(private hotelService: HotelService) {}
+  constructor(private hotelService: HotelService) {
+  }
 
   ngOnInit(): void {
     this.search();
   }
+
+  router: Router = inject(Router);
 
   search(): void {
     this.hotelService.searchHotels({
@@ -43,5 +48,9 @@ export class HotelSearchComponent implements OnInit {
         console.error(err);
       }
     });
+  }
+
+  selectHotel(hotel: Hotel) {
+    this.router.navigate(['home/hotel', hotel.id]).then();
   }
 }

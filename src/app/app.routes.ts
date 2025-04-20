@@ -21,18 +21,19 @@ export const routes: Routes = [
         path: 'register',
         component: RegisterComponent
     },
-    {path: 'hotel', component: HotelSearchComponent},
-    {path: 'hotel/:id', component: HotelDetailComponent},
+    {
+        path: 'home',
+        component: HomeComponent,
+        children: [
+            { path: '', component: HotelSearchComponent },
+            { path: 'hotel/:id', component: HotelDetailComponent }
+        ]
+    },
     {
         path: 'dashboard',
         component: DashboardComponent,
         canActivate: [AuthGuard],
         data: {role: 'admin'}
-    }, {
-        path: 'home',
-        component: HomeComponent,
-        // canActivate: [AuthGuard],
-        // data: { role: 'guest' }
     },
     {
         path: 'unauthorized',
