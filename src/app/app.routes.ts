@@ -1,10 +1,11 @@
-import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import {Routes} from '@angular/router';
+import {LoginComponent} from './login/login.component';
 import {AuthGuard} from './auth/auth.guard';
 import {DashboardComponent} from './admin/dashboard/dashboard.component';
-import { UnauthorizedComponent } from './util/unauthorized/unauthorized.component';
-import { HomeComponent } from './user/home/home.component';
-import { RegisterComponent } from './register/register.component';
+import {UnauthorizedComponent} from './util/unauthorized/unauthorized.component';
+import {HomeComponent} from './user/home/home.component';
+import {RegisterComponent} from './register/register.component';
+import { HotelSearchComponent } from './user/hotel-search/hotel-search.component';
 
 export const routes: Routes = [
   {
@@ -15,16 +16,20 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
-  },  {
+  }, {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'hotel-search',
+    component: HotelSearchComponent,
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-    data: { role: 'admin' }
-  },{
+    data: {role: 'admin'}
+  }, {
     path: 'home',
     component: HomeComponent,
     // canActivate: [AuthGuard],
