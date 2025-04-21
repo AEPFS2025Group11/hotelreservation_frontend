@@ -1,29 +1,39 @@
-<div class="p-4 border rounded shadow">
-  <h4 class="text-lg font-bold">Zimmer {{ room.room_number }} - {{ room.hotel.name }}</h4>
-  <p><strong>Typ:</strong> {{ room.type.description }}</p>
-  <p><strong>Max. Gäste:</strong> {{ room.type.max_guests }}</p>
+<div class="p-6 border border-gray-200 rounded-xl shadow hover:shadow-md transition-all bg-white space-y-3">
+  <div class="flex items-center justify-between">
+    <h4 class="text-lg font-bold text-blue-800">
+      Zimmer {{ room.room_number }}
+    </h4>
+    <span class="text-sm text-gray-500">{{ room.hotel.name }}</span>
+  </div>
 
-  <p><strong>Ausstattung:</strong>
-    <span *ngFor="let facility of room.facilities; let last = last">
-      {{ facility.facility_name }}<span *ngIf="!last">, </span>
-    </span>
-  </p>
+  <div class="text-sm text-gray-700 space-y-1">
+    <p><strong>Typ:</strong> {{ room.type.description }}</p>
+    <p><strong>Max. Gäste:</strong> {{ room.type.max_guests }}</p>
 
-  <p><strong>Preis/Nacht:</strong>
-    {{ room.dynamic_price_per_night ?? room.price_per_night }}
-  </p>
+    <p><strong>Ausstattung:</strong>
+      <span *ngFor="let facility of room.facilities; let last = last">
+        {{ facility.facility_name }}<span *ngIf="!last">, </span>
+      </span>
+    </p>
 
-  <p *ngIf="room.total_price"><strong>Gesamtpreis:</strong> {{ room.total_price }}</p>
+    <p>
+      <strong>Preis/Nacht:</strong>
+      {{ room.dynamic_price_per_night ?? room.price_per_night }} CHF
+    </p>
 
-  <p *ngIf="room.total_price === undefined" class="text-gray-500 italic">
-    Bitte Zeitraum wählen, um Gesamtpreis zu sehen
-  </p>
+    <p *ngIf="room.total_price">
+      <strong>Gesamtpreis:</strong> {{ room.total_price }} CHF
+    </p>
+
+    <p *ngIf="room.total_price === undefined" class="text-gray-500 italic">
+      Bitte Zeitraum wählen, um Gesamtpreis zu sehen
+    </p>
+  </div>
 
   <button
-    class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+    class="w-full mt-3 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all"
     (click)="bookRoom()"
   >
-    Zimmer buchen
+    ✅ Jetzt buchen
   </button>
 </div>
-
