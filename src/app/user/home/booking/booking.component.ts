@@ -4,6 +4,8 @@ import { BookingService } from '../../../services/booking.service';
 import { AuthService } from '../../../auth/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {RoomService} from '../../../services/room.service';
+import {Room} from '../../../models/room.model';
 
 @Component({
   selector: 'app-booking',
@@ -18,6 +20,8 @@ export class BookingComponent implements OnInit {
   errorMessage = '';
 
   roomId!: string | null;
+  private roomService: RoomService = inject(RoomService);
+  room: Room | undefined;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -29,6 +33,10 @@ export class BookingComponent implements OnInit {
     this.roomId = this.route.snapshot.paramMap.get('roomId');
     this.checkInDate = this.route.snapshot.queryParamMap.get('check_in') || '';
     this.checkOutDate = this.route.snapshot.queryParamMap.get('check_out') || '';
+    this.roomService.getRoom(this.roomId).subscribe({
+      next: (room) => this.room = room,
+      error: () => this.errorMessage = 'Zimmer konnte nicht geladen werden.'
+    });
   }
 
   bookRoom() {
@@ -76,4 +84,40 @@ export class BookingComponent implements OnInit {
       }
     });
   }
+
+  calculateNights(checkInDate: string, checkOutDate: string): number {
+    const checkIn = new Date(checkInDate);
+    const checkOut = new Date(checkOutDate);
+
+    const diffTime = checkOut.getTime() - checkIn.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays > 0 ? diffDays : 0;
+  }
+
+  formatStayInfo(checkInDate: string, checkOutDate: string): string {
+    const checkIn = new Date(checkInDate);
+    const checkOut = new Date(checkOutDate);
+
+    if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) {
+      return 'Ungültiges Datum';
+    }
+
+    const diffTime = checkOut.getTime() - checkIn.getTime();
+    const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (nights <= 0) return 'Ungültiger Zeitraum';
+
+    const formatter = new Intl.DateTimeFormat('de-CH', {
+      day: '2-digit',
+      month: '2-digit'
+    });
+
+    const from = formatter.format(checkIn);   // → z. B. 10.07.
+    const to = formatter.format(checkOut);    // → z. B. 13.07.
+
+    return `${nights} Nacht${nights > 1 ? 'e' : ''}, ${from}–${to}`;
+  }
+
+
 }

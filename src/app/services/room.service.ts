@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Room } from '../models/room.model';
-import {Hotel} from '../models/hotel.model';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {catchError, Observable, throwError} from 'rxjs';
+import {Room} from '../models/room.model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,4 +59,12 @@ export class RoomService {
     return this.http.get<Room[]>(this.apiUrl, { params });
   }
 
+  getRoom(room_id: string | null): Observable<Room> {
+    return this.http.get<Room>(`${this.apiUrl}/${room_id}`).pipe(
+      catchError(error => {
+        console.error('Fehler beim Laden des Zimmers', error);
+        return throwError(() => error);
+      })
+    );
+  }
 }

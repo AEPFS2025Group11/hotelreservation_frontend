@@ -1,25 +1,62 @@
-<div class="max-w-md mx-auto p-6 bg-white shadow-md rounded-md">
-  <h3 class="text-xl font-bold mb-4">Zimmer buchen</h3>
+<div class="max-w-xl mx-auto p-6 bg-white shadow-md rounded-xl space-y-6">
+  <h2 class="text-2xl font-bold text-center text-blue-800">🛎️ Zimmer buchen</h2>
 
-  <div class="mb-4">
-    <label class="block mb-1 font-medium">Check-In</label>
-    <input type="date" [(ngModel)]="checkInDate" class="w-full border rounded p-2" />
-  </div>
-
-  <div class="mb-4">
-    <label class="block mb-1 font-medium">Check-Out</label>
-    <input type="date" [(ngModel)]="checkOutDate" class="w-full border rounded p-2" />
+  <!-- 📅 Datumseingabe -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block mb-1 font-medium text-gray-700">Check-In</label>
+      <input type="date" [(ngModel)]="checkInDate" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+    </div>
+    <div>
+      <label class="block mb-1 font-medium text-gray-700">Check-Out</label>
+      <input type="date" [(ngModel)]="checkOutDate" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+    </div>
   </div>
 
   <button (click)="bookRoom()"
-          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-    Buchen
+          class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-150">
+    ✅ Buchung abschließen
   </button>
 
-  <p *ngIf="bookingSuccess" class="mt-4 text-green-600 font-medium">
-    Buchung erfolgreich!
-  </p>
-  <p *ngIf="errorMessage" class="mt-4 text-red-600">
-    {{ errorMessage }}
-  </p>
+  <div *ngIf="bookingSuccess" class="text-green-600 text-center font-medium mt-2">
+    ✅ Buchung erfolgreich!
+  </div>
+  <div *ngIf="errorMessage" class="text-red-600 text-center mt-2">
+    ❌ {{ errorMessage }}
+  </div>
+</div>
+
+<!-- 📋 Übersicht -->
+<div class="max-w-xl mx-auto mt-8 p-6 bg-gray-50 border border-gray-200 rounded-xl shadow space-y-4">
+  <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10m-9 4h4m1 4h4" />
+    </svg>
+    Buchungsübersicht
+  </h3>
+
+  <div *ngIf="room" class="text-sm text-gray-700 space-y-1">
+    <p><strong>Zimmernummer:</strong> {{ room.room_number }}</p>
+    <p><strong>Hotel:</strong> {{ room.hotel.name }}</p>
+    <p><strong>Typ:</strong> {{ room.type.description }}</p>
+    <p><strong>Max. Gäste:</strong> {{ room.type.max_guests }}</p>
+  </div>
+
+  <div class="text-sm text-gray-700 space-y-1 border-t pt-4">
+    <p><strong>Check-In:</strong> {{ checkInDate || '–' }}</p>
+    <p><strong>Check-Out:</strong> {{ checkOutDate || '–' }}</p>
+
+    <p *ngIf="checkInDate && checkOutDate">
+      <strong>Aufenthalt:</strong> {{ formatStayInfo(checkInDate, checkOutDate) }}
+    </p>
+
+    <p *ngIf="room">
+      <strong>Preis/Nacht:</strong> {{ room.dynamic_price_per_night ?? room.price_per_night }} CHF
+    </p>
+
+    <p *ngIf="checkInDate && checkOutDate && room" class="font-semibold text-blue-600">
+      💰 Gesamtpreis:
+      {{ (calculateNights(checkInDate, checkOutDate)) * (room.dynamic_price_per_night ?? room.price_per_night) }} CHF
+    </p>
+  </div>
 </div>
