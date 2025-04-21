@@ -1,1 +1,36 @@
-<p>room-search works!</p>
+<h2 class="text-2xl font-bold mb-4">Zimmersuche</h2>
+
+<div class="grid md:grid-cols-2 gap-4">
+  <div>
+    <label for="city" class="block mb-1 font-medium">Stadt <span class="text-gray-500">(optional)</span></label>
+    <input id="city" type="text" [(ngModel)]="city" placeholder="z. B. Berlin"
+           class="border rounded-lg p-2 w-full" />
+  </div>
+
+  <div>
+    <label for="guests" class="block mb-1 font-medium">Gästezahl <span class="text-gray-500">(optional)</span></label>
+    <input id="guests" type="number" [(ngModel)]="capacity" min="1" placeholder="z. B. 2"
+           class="border rounded-lg p-2 w-full" />
+  </div>
+
+  <div>
+    <label class="block mb-1 font-medium">Zeitraum <span class="text-gray-500">(optional)</span></label>
+    <div class="flex gap-2">
+      <input id="checkInDate" type="date" [(ngModel)]="checkInDate"
+             class="border rounded-lg p-2 w-1/2" />
+      <input id="checkOutDate" type="date" [(ngModel)]="checkOutDate"
+             class="border rounded-lg p-2 w-1/2" />
+    </div>
+  </div>
+</div>
+
+<button (click)="search()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+  Suchen
+</button>
+
+<div class="mt-6">
+  <h3 class="text-lg font-semibold mb-2">Ergebnisse:</h3>
+  <div *ngIf="filteredRooms.length === 0" class="text-gray-500">Keine Ergebnisse</div>
+
+  <app-room-card *ngFor="let room of filteredRooms" [room]="room" (click)="selectRoom(room)" />
+</div>

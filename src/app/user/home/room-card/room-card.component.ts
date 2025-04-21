@@ -16,6 +16,6 @@ export class RoomCardComponent {
   router: Router = inject(Router);
 
   bookRoom() {
-    this.router.navigate(['home/hotels', this.room.hotel_id, 'rooms', this.room.id, 'book']).then();
+    this.router.navigate(['home/hotels', this.room.hotel.id, 'rooms', this.room.id, 'book']).then();
   }
 }

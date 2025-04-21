@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Room } from '../models/room.model';
+import {Hotel} from '../models/hotel.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,15 +32,32 @@ export class RoomService {
     return this.http.get<Room[]>(`http://localhost:5049/api/hotels/${hotelId}/rooms`, { params });
   }
 
-  getRoomById(roomId: number, checkIn?: string, checkOut?: string): Observable<Room> {
+  searchRooms(filters: {
+    city?: string;
+    minStars?: number;
+    guests?: number;
+    checkIn?: string;
+    checkOut?: string;
+  }): Observable<Room[]> {
     let params = new HttpParams();
-    if (checkIn) {
-      params = params.set('check_in', checkIn);
-    }
-    if (checkOut) {
-      params = params.set('check_out', checkOut);
+
+    if (filters.city) {
+      params = params.set('city', filters.city);
     }
 
-    return this.http.get<Room>(`${this.apiUrl}/${roomId}`, { params });
+    if (filters.guests !== undefined && filters.guests !== null) {
+      params = params.set('capacity', filters.guests.toString());
+    }
+
+    if (filters.checkIn) {
+      params = params.set('check_in', filters.checkIn);
+    }
+
+    if (filters.checkOut) {
+      params = params.set('check_out', filters.checkOut);
+    }
+
+    return this.http.get<Room[]>(this.apiUrl, { params });
   }
+
 }
