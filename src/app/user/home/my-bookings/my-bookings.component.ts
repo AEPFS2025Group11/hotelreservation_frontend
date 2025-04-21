@@ -48,4 +48,11 @@ export class MyBookingsComponent implements OnInit {
     });
   }
 
+  writeReview(id: number) {
+    
+  }
+
+  openInvoice(id: number) {
+    
+  }
 }
