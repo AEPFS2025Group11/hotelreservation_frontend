@@ -47,16 +47,22 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
-  loginSuccess(access_token: any) {
+  loginSuccess(access_token: string) {
     localStorage.setItem('token', access_token);
 
     const payload = JSON.parse(atob(access_token.split('.')[1]));
 
-    const user = {
+    const user: User = {
+      id: payload.sub,
       email: payload.email || 'unbekannt',
       role: payload.role
     };
 
     this.currentUserSubject.next(user);
+  }
+
+
+  getUserId() {
+    return this.currentUserSubject.value?.id;
   }
 }

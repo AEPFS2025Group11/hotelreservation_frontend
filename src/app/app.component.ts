@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {AuthService} from './auth/auth.service';
-import {Router, RouterOutlet} from '@angular/router';
+import {RouterOutlet} from '@angular/router';
 import {initFlowbite} from 'flowbite';
 
 @Component({
@@ -13,10 +13,15 @@ import {initFlowbite} from 'flowbite';
   `
 })
 export class AppComponent implements OnInit {
+  private authService: AuthService = inject(AuthService);
 
 
-  ngOnInit(): void {
+  ngOnInit() {
     initFlowbite();
+    const token = this.authService.getToken();
+    if (token) {
+      this.authService.loginSuccess(token);
+    }
   }
 
 
