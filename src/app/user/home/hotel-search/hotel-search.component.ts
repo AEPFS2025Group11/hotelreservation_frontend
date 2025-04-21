@@ -51,6 +51,6 @@ export class HotelSearchComponent implements OnInit {
   }
 
   selectHotel(hotel: Hotel) {
-    this.router.navigate(['home/hotel', hotel.id]).then();
+    this.router.navigate(['home/hotels', hotel.id]).then();
   }
 }

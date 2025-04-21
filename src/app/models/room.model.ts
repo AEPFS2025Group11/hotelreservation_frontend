@@ -3,6 +3,7 @@ import {RoomType} from './room-type.model';
 
 export interface Room {
   id: number
+  hotel_id: number
   room_number: string
   type: RoomType
   facilities: Facility[]

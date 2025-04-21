@@ -7,6 +7,7 @@ import {HomeComponent} from './user/home/home.component';
 import {RegisterComponent} from './register/register.component';
 import {HotelSearchComponent} from './user/home/hotel-search/hotel-search.component';
 import {HotelDetailComponent} from './user/home/hotel-detail/hotel-detail.component';
+import {BookingComponent} from "./user/home/booking/booking.component";
 
 export const routes: Routes = [
     {
@@ -26,7 +27,8 @@ export const routes: Routes = [
         component: HomeComponent,
         children: [
             { path: '', component: HotelSearchComponent },
-            { path: 'hotel/:id', component: HotelDetailComponent }
+            { path: 'hotels/:id', component: HotelDetailComponent },
+            {path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent}
         ]
     },
     {

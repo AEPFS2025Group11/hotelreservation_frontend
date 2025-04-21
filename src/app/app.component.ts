@@ -2,6 +2,8 @@ import {Component, inject} from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import {Router, RouterOutlet} from '@angular/router';
 import {AsyncPipe, NgIf} from '@angular/common';
+import {initFlowbite} from 'flowbite';
+import {OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -17,13 +19,16 @@ import {AsyncPipe, NgIf} from '@angular/common';
     <router-outlet></router-outlet>
   `
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   authService: AuthService = inject(AuthService)
   router: Router = inject(Router)
 
   isLoggedIn$ = this.authService.isLoggedIn$;
 
+  ngOnInit(): void {
+    initFlowbite();
+  }
 
   logout() {
     this.authService.logout();
