@@ -54,7 +54,7 @@
 
     <p *ngIf="checkInDate && checkOutDate && room" class="font-semibold text-blue-600">
       💰 Gesamtpreis:
-      {{ (calculateNights(checkInDate, checkOutDate)) * (room.dynamic_price_per_night ?? room.price_per_night) }} CHF
+      {{ calculateTotalAmount(checkInDate, checkOutDate) }} CHF
     </p>
   </div>
 </div>

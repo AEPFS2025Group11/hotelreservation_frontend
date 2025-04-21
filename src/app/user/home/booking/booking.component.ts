@@ -69,7 +69,7 @@ export class BookingComponent implements OnInit {
       check_in: this.checkInDate,
       check_out: this.checkOutDate,
       is_cancelled: false,
-      total_amount: 0
+      total_amount: this.calculateTotalAmount(this.checkInDate, this.checkOutDate)
     }).subscribe({
       next: () => {
         this.bookingSuccess = true;
@@ -83,6 +83,12 @@ export class BookingComponent implements OnInit {
         this.errorMessage = 'Buchung fehlgeschlagen.';
       }
     });
+  }
+
+  calculateTotalAmount(checkInDate: string, checkOutDate: string): number {
+    if (!this.room) return 0;
+    return this.calculateNights(checkInDate, checkOutDate) *
+      (this.room.dynamic_price_per_night ?? this.room.price_per_night);
   }
 
   calculateNights(checkInDate: string, checkOutDate: string): number {

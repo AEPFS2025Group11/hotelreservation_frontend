@@ -26,4 +26,8 @@ export class BookingService {
   }): Observable<any> {
     return this.http.post(this.bookingApi, booking);
   }
+
+  cancelBooking(id: number) {
+    return this.http.patch(`${this.bookingApi}/${id}/cancel`,null);
+  }
 }

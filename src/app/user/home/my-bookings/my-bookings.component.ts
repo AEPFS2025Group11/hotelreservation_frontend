@@ -29,4 +29,23 @@ export class MyBookingsComponent implements OnInit {
       }
     });
   }
+
+  cancelBooking(bookingId: number) {
+    if (!confirm('Möchtest du diese Buchung wirklich stornieren?')) return;
+
+    this.bookingService.cancelBooking(bookingId).subscribe({
+      next: () => {
+        const booking = this.bookings.find(b => b.id === bookingId);
+        if (booking) {
+          booking.is_cancelled = true;
+          booking.total_amount = 0;
+        }
+      },
+      error: err => {
+        console.error(err);
+        this.error = err.error.detail || 'Fehler beim Stornieren der Buchung.';
+      }
+    });
+  }
+
 }
