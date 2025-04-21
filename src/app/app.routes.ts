@@ -6,43 +6,48 @@ import {UnauthorizedComponent} from './util/unauthorized/unauthorized.component'
 import {HomeComponent} from './user/home/home.component';
 import {RegisterComponent} from './register/register.component';
 import {HotelSearchComponent} from './user/home/hotel-search/hotel-search.component';
-import {HotelDetailComponent} from './user/home/hotel-detail/hotel-detail.component';
+import {HotelDetailComponent} from './user/home/hotel-search/hotel-detail/hotel-detail.component';
 import {BookingComponent} from "./user/home/booking/booking.component";
 import {MyBookingsComponent} from "./user/home/my-bookings/my-bookings.component";
-import { RoomSearchComponent } from './user/home/room-search/room-search.component';
+import {RoomSearchComponent} from './user/home/room-search/room-search.component';
+import {InvoiceDetailComponent} from './user/home/invoice/invoice.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    }, {
-        path: 'register',
-        component: RegisterComponent
-    },
-    {
-        path: 'home',
-        component: HomeComponent,
-        children: [
-            {path: 'hotels', component: HotelSearchComponent},
-            {path: 'hotels/:id', component: HotelDetailComponent},
-            {path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent},
-            {path: 'my-bookings', component: MyBookingsComponent},
-            {path: 'rooms', component: RoomSearchComponent},
-        ]
-    },
-    {
-        path: 'dashboard',
-        component: DashboardComponent,
-        canActivate: [AuthGuard],
-        data: {role: 'admin'}
-    },
-    {
-        path: 'unauthorized',
-        component: UnauthorizedComponent
-    }
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  }, {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    children: [
+      {path: 'hotels', component: HotelSearchComponent},
+      {path: 'hotels/:id', component: HotelDetailComponent},
+      {path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent},
+      {path: 'my-bookings', component: MyBookingsComponent},
+      {path: 'rooms', component: RoomSearchComponent},
+      {
+        path: 'invoices/:bookingId',
+        component: InvoiceDetailComponent
+      },
+    ]
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    data: {role: 'admin'}
+  },
+  {
+    path: 'unauthorized',
+    component: UnauthorizedComponent
+  }
 ];

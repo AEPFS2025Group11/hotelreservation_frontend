@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Room} from '../../../models/room.model';
-import {RoomService} from '../../../services/room.service';
+import {Room} from '../../../../models/room.model';
+import {RoomService} from '../../../../services/room.service';
 import {FormsModule} from '@angular/forms';
-import {RoomCardComponent} from '../room-card/room-card.component';
+import {RoomCardComponent} from '../../room-card/room-card.component';
 import {CommonModule} from '@angular/common';
 
 @Component({

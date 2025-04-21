@@ -3,6 +3,7 @@ import {Booking} from '../../../models/booking.model';
 import {BookingService} from '../../../services/booking.service';
 import {CommonModule} from '@angular/common';
 import {AuthService} from '../../../auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-my-bookings',
@@ -18,6 +19,8 @@ export class MyBookingsComponent implements OnInit {
 
   constructor(private bookingService: BookingService) {
   }
+
+  router: Router = inject(Router);
 
   ngOnInit(): void {
     const userId = this.authService.getUserId();
@@ -48,11 +51,11 @@ export class MyBookingsComponent implements OnInit {
     });
   }
 
-  writeReview(id: number) {
-    
+  openInvoice(bookingId: number) {
+    this.router.navigate(['/home/invoices', bookingId]).then();
   }
 
-  openInvoice(id: number) {
-    
+  writeReview(bookingId: number) {
+    this.router.navigate(['/home/reviews', bookingId]).then();
   }
 }

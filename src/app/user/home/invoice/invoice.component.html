@@ -1,0 +1,45 @@
+<div class="max-w-xl mx-auto bg-white p-6 shadow-xl rounded-xl border border-gray-100">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-bold text-blue-800 flex items-center gap-2">
+      🧾 <span>Rechnung</span>
+    </h2>
+    <span class="text-sm text-gray-500">{{ invoice?.issue_date | date: 'dd.MM.yyyy' }}</span>
+  </div>
+
+  <div *ngIf="error" class="text-red-600 font-medium bg-red-50 p-3 rounded border border-red-200">
+    {{ error }}
+  </div>
+
+  <div *ngIf="invoice" class="space-y-4">
+    <div class="flex justify-between">
+      <span class="text-gray-600 font-medium">Rechnungsnummer</span>
+      <span class="font-semibold text-gray-900">#{{ invoice.id }}</span>
+    </div>
+
+    <div class="flex justify-between">
+      <span class="text-gray-600 font-medium">Buchung</span>
+      <span class="text-gray-800">#{{ invoice.booking_id }}</span>
+    </div>
+
+    <div class="flex justify-between">
+      <span class="text-gray-600 font-medium">Status</span>
+      <span
+        class="text-sm font-semibold px-2 py-1 rounded-full"
+        [ngClass]="{
+          'bg-green-100 text-green-800': invoice.status === 'PAID',
+          'bg-yellow-100 text-yellow-800': invoice.status === 'PENDING',
+          'bg-red-100 text-red-700': invoice.status === 'CANCELLED'
+        }"
+      >
+        {{ invoice.status }}
+      </span>
+    </div>
+
+    <hr class="my-4 border-gray-200"/>
+
+    <div class="flex justify-between text-lg font-bold">
+      <span class="text-gray-700">Gesamtbetrag</span>
+      <span class="text-blue-800">{{ invoice.total_amount | currency: 'CHF' }}</span>
+    </div>
+  </div>
+</div>

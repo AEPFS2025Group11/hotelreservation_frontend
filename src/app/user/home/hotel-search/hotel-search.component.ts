@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {Hotel} from '../../../models/hotel.model';
 import {HotelService} from '../../../services/hotel.service';
-import {HotelCardComponent} from '../hotel-card/hotel-card.component';
+import {HotelCardComponent} from './hotel-card/hotel-card.component';
 import {Router} from '@angular/router';
 
 @Component({
