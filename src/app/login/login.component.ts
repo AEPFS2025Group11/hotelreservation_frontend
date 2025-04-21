@@ -42,7 +42,7 @@ export class LoginComponent {
         if (role === 'admin') {
           this.router.navigate(['/dashboard']);
         } else {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home/hotels']);
         }
       },
       error: err => {

@@ -51,7 +51,7 @@ export class RegisterComponent {
         if (user?.role.includes('admin')) {
           this.router.navigate(['/dashboard']).then();
         } else {
-          this.router.navigate(['/home']).then();
+          this.router.navigate(['/home/hotels']).then();
         }
       },
       error: (err) => {

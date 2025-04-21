@@ -8,6 +8,8 @@ import {RegisterComponent} from './register/register.component';
 import {HotelSearchComponent} from './user/home/hotel-search/hotel-search.component';
 import {HotelDetailComponent} from './user/home/hotel-detail/hotel-detail.component';
 import {BookingComponent} from "./user/home/booking/booking.component";
+import {MyBookingsComponent} from "./user/home/my-bookings/my-bookings.component";
+import { RoomSearchComponent } from './user/home/room-search/room-search.component';
 
 export const routes: Routes = [
     {
@@ -26,9 +28,11 @@ export const routes: Routes = [
         path: 'home',
         component: HomeComponent,
         children: [
-            { path: '', component: HotelSearchComponent },
-            { path: 'hotels/:id', component: HotelDetailComponent },
-            {path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent}
+            {path: 'hotels', component: HotelSearchComponent},
+            {path: 'hotels/:id', component: HotelDetailComponent},
+            {path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent},
+            {path: 'my-bookings', component: MyBookingsComponent},
+            {path: 'rooms', component: RoomSearchComponent},
         ]
     },
     {
