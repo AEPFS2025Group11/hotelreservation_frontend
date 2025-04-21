@@ -13,5 +13,5 @@
 <div *ngIf="rooms.length === 0 && !error" class="text-gray-500">Keine Zimmer gefunden</div>
 
 <div class="grid md:grid-cols-2 gap-4">
-  <app-room-card *ngFor="let room of rooms" [room]="room" />
+  <app-room-card *ngFor="let room of rooms" [room]="room" [checkInDate]="checkInDate" [checkOutDate]="checkOutDate"/>
 </div>

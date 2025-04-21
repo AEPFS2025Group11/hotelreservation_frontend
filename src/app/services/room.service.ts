@@ -14,8 +14,8 @@ export class RoomService {
 
   getRoomsByHotel(hotelId: number, filters: {
     capacity: number | null;
-    checkIn: string;
-    checkOut: string
+    checkIn: string | null;
+    checkOut: string | null
   }): Observable<Room[]> {
     let params = new HttpParams();
 

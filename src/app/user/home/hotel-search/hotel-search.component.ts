@@ -16,8 +16,8 @@ export class HotelSearchComponent implements OnInit {
   city: string = '';
   minStars: number | null = null;
   guests: number | null = null;
-  checkInDate: string = '';
-  checkOutDate: string = '';
+  checkInDate: string | null = null;
+  checkOutDate: string | null = null;
 
   filteredHotels: Hotel[] = [];
   error: string | null = null;
@@ -51,6 +51,17 @@ export class HotelSearchComponent implements OnInit {
   }
 
   selectHotel(hotel: Hotel) {
-    this.router.navigate(['home/hotels', hotel.id]).then();
+    if (!this.checkInDate || !this.checkOutDate) {
+      this.router.navigate(['home/hotels', hotel.id]).then();
+      return;
+    }
+
+    this.router.navigate(['home/hotels', hotel.id],
+      {
+        queryParams: {
+          check_in: this.checkInDate,
+          check_out: this.checkOutDate,
+        }
+      }).then();
   }
 }

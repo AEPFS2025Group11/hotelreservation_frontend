@@ -31,6 +31,9 @@ export class HotelDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.hotelId = Number(this.route.snapshot.paramMap.get('id'));
+    this.checkInDate = this.route.snapshot.queryParamMap.get('check_in') || '';
+    this.checkOutDate = this.route.snapshot.queryParamMap.get('check_out') || '';
+
     this.loadRooms();
   }
 
