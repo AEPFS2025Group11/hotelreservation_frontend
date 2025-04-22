@@ -15,6 +15,10 @@ export class ReviewService {
     return this.http.post<Review>(this.apiUrl, review);
   }
 
+  getByBookingId(bookingId: number): Observable<Review> {
+    return this.http.get<Review>(`${this.apiUrl}/bookings/${bookingId}`);
+  }
+
   getReviewsByHotel(hotelId: number): Observable<Review[]> {
     return this.http.get<Review[]>(`${this.apiUrl}/hotel/${hotelId}`);
   }

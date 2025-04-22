@@ -4,6 +4,7 @@ import {BookingService} from '../../../services/booking.service';
 import {CommonModule} from '@angular/common';
 import {AuthService} from '../../../auth/auth.service';
 import {Router} from '@angular/router';
+import {ReviewService} from '../../../services/review.service';
 
 @Component({
   selector: 'app-my-bookings',
@@ -16,6 +17,7 @@ export class MyBookingsComponent implements OnInit {
   bookings: Booking[] = [];
   error: string | null = null;
   private authService: AuthService = inject(AuthService);
+  private reviewService: ReviewService = inject(ReviewService);
 
   constructor(private bookingService: BookingService) {
   }
@@ -56,6 +58,18 @@ export class MyBookingsComponent implements OnInit {
   }
 
   writeReview(bookingId: number) {
-    this.router.navigate(['/home/reviews', bookingId]).then();
+    this.reviewService.getByBookingId(bookingId).subscribe({
+      next: (existingReview) => {
+        if (existingReview) {
+          this.error = 'Diese Buchung wurde bereits bewertet.';
+        } else {
+          this.router.navigate(['/home/reviews', bookingId]).then();
+        }
+      },
+      error: () => {
+        this.router.navigate(['/home/reviews', bookingId]).then();
+      }
+    });
   }
+
 }
