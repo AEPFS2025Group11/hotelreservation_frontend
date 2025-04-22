@@ -40,7 +40,7 @@ export class LoginComponent {
         const role = response.user.role;
 
         if (role === 'admin') {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard/manage-hotels']);
         } else {
           this.router.navigate(['/home/hotels']);
         }

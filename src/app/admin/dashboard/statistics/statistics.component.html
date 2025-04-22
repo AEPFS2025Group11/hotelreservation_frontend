@@ -1,0 +1,69 @@
+  <div class="bg-white py-15 px-10 rounded-lg shadow border ">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">🏨 Belegung nach Raumtyp</h3>
+    <div class="w-full h-[400px]">
+      <ngx-charts-bar-vertical
+        class="w-full h-full"
+        [results]="occupancyData"
+        [scheme]="'vivid'"
+        [gradient]="false"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="true"
+        [legendPosition]="legendPosition"
+        [showDataLabel]="true"
+        [animations]="true">
+      </ngx-charts-bar-vertical>
+    </div>
+  </div>
+
+  <div class="bg-white py-15 px-10 rounded-lg shadow border ">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">🎂 Altersverteilung</h3>
+    <div class="w-full h-[400px]">
+      <ngx-charts-pie-chart
+        class="w-full h-full"
+        [results]="ageData"
+        [scheme]="'cool'"
+        [legend]="true"
+        [legendPosition]="legendPosition"
+        [labels]="true"
+        [doughnut]="false"
+        [explodeSlices]="true"
+        [animations]="true">
+      </ngx-charts-pie-chart>
+    </div>
+  </div>
+
+  <div class="bg-white py-15 px-10 rounded-lg shadow border ">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">🌍 Herkunftsländer</h3>
+    <div class="w-full h-[400px]">
+      <ngx-charts-pie-chart
+        class="w-full h-full"
+        [results]="countryData"
+        [scheme]="'flame'"
+        [legend]="true"
+        [legendPosition]="legendPosition"
+        [labels]="true"
+        [doughnut]="true"
+        [explodeSlices]="false"
+        [animations]="true">
+      </ngx-charts-pie-chart>
+    </div>
+  </div>
+
+  <div class="bg-white py-15 px-10 rounded-lg shadow border ">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">🔁 Wiederkehrende Gäste</h3>
+    <div class="w-full h-[400px]">
+      <ngx-charts-bar-horizontal
+        class="w-full h-full"
+        [results]="returningGuestData"
+        [scheme]="'natural'"
+        [gradient]="false"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="false"
+        [showDataLabel]="true"
+        [animations]="true">
+      </ngx-charts-bar-horizontal>
+    </div>
+  </div>
+

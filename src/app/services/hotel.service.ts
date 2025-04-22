@@ -43,5 +43,21 @@ export class HotelService {
     return this.http.get<Hotel[]>(this.apiUrl, { params });
   }
 
+  getAllHotels(): Observable<Hotel[]> {
+    return this.http.get<Hotel[]>(this.apiUrl);
+  }
+
+  createHotel(hotel: Hotel): Observable<Hotel> {
+    return this.http.post<Hotel>(this.apiUrl, hotel);
+  }
+
+  updateHotel(id: number, hotel: Hotel): Observable<Hotel> {
+    return this.http.put<Hotel>(`${this.apiUrl}/${id}`, hotel);
+  }
+
+  deleteHotel(id: number): Observable<Hotel> {
+    return this.http.delete<Hotel>(`${this.apiUrl}/${id}`);
+  }
+
 
 }

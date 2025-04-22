@@ -12,47 +12,55 @@ import {MyBookingsComponent} from "./user/home/my-bookings/my-bookings.component
 import {RoomSearchComponent} from './user/home/room-search/room-search.component';
 import {InvoiceDetailComponent} from './user/home/my-bookings/invoice/invoice.component';
 import {ReviewComponent} from './user/home/my-bookings/review/review.component';
+import {HotelManagementComponent} from './admin/dashboard/hotel-management/hotel-management.component';
+import {StatisticsComponent} from './admin/dashboard/statistics/statistics.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  }, {
-    path: 'register',
-    component: RegisterComponent
-  },
-  {
-    path: 'home',
-    component: HomeComponent,
-    children: [
-      {path: 'hotels', component: HotelSearchComponent},
-      {path: 'hotels/:id', component: HotelDetailComponent},
-      {path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent},
-      {path: 'my-bookings', component: MyBookingsComponent},
-      {path: 'rooms', component: RoomSearchComponent},
-      {
-        path: 'invoices/:bookingId',
-        component: InvoiceDetailComponent
-      }, {
-        path: 'reviews/:bookingId',
-        component: ReviewComponent
-      },
+    {
+      path: '',
+      redirectTo: 'login',
+      pathMatch: 'full'
+    },
+    {
+      path: 'login',
+      component: LoginComponent
+    }, {
+      path: 'register',
+      component: RegisterComponent
+    },
+    {
+      path: 'home',
+      component: HomeComponent,
+      children: [
+        {path: 'hotels', component: HotelSearchComponent},
+        {path: 'hotels/:id', component: HotelDetailComponent},
+        {path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent},
+        {path: 'my-bookings', component: MyBookingsComponent},
+        {path: 'rooms', component: RoomSearchComponent},
+        {
+          path: 'invoices/:bookingId',
+          component: InvoiceDetailComponent
+        }, {
+          path: 'reviews/:bookingId',
+          component: ReviewComponent
+        },
 
-    ]
-  },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthGuard],
-    data: {role: 'admin'}
-  },
-  {
-    path: 'unauthorized',
-    component: UnauthorizedComponent
-  }
-];
+      ]
+    },
+    {
+      path: 'dashboard',
+      component: DashboardComponent,
+      canActivate: [AuthGuard],
+      data: {role: 'admin'},
+      children: [
+        {path: 'manage-hotels', component: HotelManagementComponent},
+        {path: 'statistics', component: StatisticsComponent},
+      ]
+    },
+    {
+      path: 'unauthorized',
+      component:
+      UnauthorizedComponent
+    }
+  ]
+;
