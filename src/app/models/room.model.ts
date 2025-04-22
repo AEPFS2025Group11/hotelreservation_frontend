@@ -1,10 +1,10 @@
 import {Facility} from './facility.model';
 import {RoomType} from './room-type.model';
-import {Hotel} from './hotel.model';
+import {HotelOut} from './hotel.model';
 
 export interface Room {
   id: number
-  hotel: Hotel
+  hotel: HotelOut
   room_number: string
   type: RoomType
   facilities: Facility[]

@@ -1,6 +1,11 @@
-export interface Address {
+export interface AddressOut {
   id: number;
   street: string;
   city: string;
-  zipCode: string;
+  zip_code: string;
+}
+export interface AddressIn {
+  street: string;
+  city: string;
+  zip_code: string;
 }

@@ -1,8 +1,20 @@
-import {Address} from './address.model';
+import {AddressOut} from './address.model';
 
-export interface Hotel {
-  id: number;
-  name: string;
-  stars: number;
-  address: Address;
+export interface HotelIn {
+  name: string
+  stars: number
+  address_id: number
 }
+
+export interface HotelOut {
+  id: number
+  name: string
+  stars: number
+  address: AddressOut
+}
+
+export interface HotelUpdate {
+  name?: string
+  stars?: number
+}
+

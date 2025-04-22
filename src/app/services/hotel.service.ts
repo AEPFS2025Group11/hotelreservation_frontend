@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import {Hotel} from '../models/hotel.model';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {HotelIn, HotelOut} from '../models/hotel.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HotelService {
-  private apiUrl = 'http://localhost:5049/api/hotels';
+  private apiUrl = 'http://localhost:5049/api/hotels/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   searchHotels(filters: {
     city?: string;
@@ -17,7 +18,7 @@ export class HotelService {
     guests?: number;
     checkIn?: string;
     checkOut?: string;
-  }): Observable<Hotel[]> {
+  }): Observable<HotelOut[]> {
     let params = new HttpParams();
 
     if (filters.city) {
@@ -40,23 +41,23 @@ export class HotelService {
       params = params.set('check_out', filters.checkOut);
     }
 
-    return this.http.get<Hotel[]>(this.apiUrl, { params });
+    return this.http.get<HotelOut[]>(this.apiUrl, {params});
   }
 
-  getAllHotels(): Observable<Hotel[]> {
-    return this.http.get<Hotel[]>(this.apiUrl);
+  getAllHotels(): Observable<HotelOut[]> {
+    return this.http.get<HotelOut[]>(`${this.apiUrl}admin`);
   }
 
-  createHotel(hotel: Hotel): Observable<Hotel> {
-    return this.http.post<Hotel>(this.apiUrl, hotel);
+  updateHotel(id: number, hotel: HotelIn): Observable<HotelOut> {
+    return this.http.put<HotelOut>(`${this.apiUrl}${id}`, hotel);
   }
 
-  updateHotel(id: number, hotel: Hotel): Observable<Hotel> {
-    return this.http.put<Hotel>(`${this.apiUrl}/${id}`, hotel);
+  createHotel(hotel: HotelIn): Observable<HotelOut> {
+    return this.http.post<HotelOut>(this.apiUrl, hotel);
   }
 
-  deleteHotel(id: number): Observable<Hotel> {
-    return this.http.delete<Hotel>(`${this.apiUrl}/${id}`);
+  deleteHotel(id: number): Observable<HotelOut> {
+    return this.http.delete<HotelOut>(`${this.apiUrl}${id}`);
   }
 
 

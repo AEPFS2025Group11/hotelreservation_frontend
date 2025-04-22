@@ -1,10 +1,10 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {Hotel} from '../../../models/hotel.model';
 import {HotelService} from '../../../services/hotel.service';
 import {HotelCardComponent} from './hotel-card/hotel-card.component';
 import {Router} from '@angular/router';
+import {HotelOut} from '../../../models/hotel.model';
 
 @Component({
   selector: 'app-hotel-search',
@@ -19,7 +19,7 @@ export class HotelSearchComponent implements OnInit {
   checkInDate: string | null = null;
   checkOutDate: string | null = null;
 
-  filteredHotels: Hotel[] = [];
+  filteredHotels: HotelOut[] = [];
   error: string | null = null;
 
   constructor(private hotelService: HotelService) {
@@ -50,7 +50,7 @@ export class HotelSearchComponent implements OnInit {
     });
   }
 
-  selectHotel(hotel: Hotel) {
+  selectHotel(hotel: HotelOut) {
     if (!this.checkInDate || !this.checkOutDate) {
       this.router.navigate(['home/hotels', hotel.id]).then();
       return;

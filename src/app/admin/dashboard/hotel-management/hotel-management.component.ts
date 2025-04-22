@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Hotel } from '../../../models/hotel.model';
+import { Component, inject, OnInit } from '@angular/core';
+import { HotelOut } from '../../../models/hotel.model';
+import { AddressIn } from '../../../models/address.model';
 import { HotelService } from '../../../services/hotel.service';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { AddressService } from '../../../services/address.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-hotel-management',
@@ -11,13 +13,24 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './hotel-management.component.html'
 })
 export class HotelManagementComponent implements OnInit {
-  hotels: Hotel[] = [];
-  selectedHotel: Hotel | null = null;
-  newHotel: Partial<Hotel> = {};
+  hotels: HotelOut[] = [];
+  selectedHotel: HotelOut | null = null;
+  showCreateForm: boolean = false;
+
+  hotelName: string = '';
+  hotelStars: number = 1;
+
+  address: AddressIn = {
+    street: '',
+    city: '',
+    zip_code: ''
+  };
+
   error = '';
   success = '';
 
-  constructor(private hotelService: HotelService) {}
+  private addressService = inject(AddressService);
+  private hotelService = inject(HotelService);
 
   ngOnInit() {
     this.loadHotels();
@@ -30,48 +43,73 @@ export class HotelManagementComponent implements OnInit {
     });
   }
 
-  selectHotel(hotel: Hotel) {
-    this.selectedHotel = { ...hotel };
+  editHotel(hotel: HotelOut) {
+    this.selectedHotel = hotel;
+    this.hotelName = hotel.name;
+    this.hotelStars = hotel.stars;
+    this.address = { ...hotel.address };
+    this.showCreateForm = true;
     this.success = '';
     this.error = '';
   }
 
-  saveHotel() {
-    if (!this.selectedHotel) return;
-
-    this.hotelService.updateHotel(this.selectedHotel.id, this.selectedHotel).subscribe({
-      next: () => {
-        this.success = 'Hotel erfolgreich aktualisiert.';
-        this.selectedHotel = null;
-        this.loadHotels();
-      },
-      error: () => this.error = 'Fehler beim Aktualisieren des Hotels.'
-    });
+  cancelEdit() {
+    this.selectedHotel = null;
+    this.hotelName = '';
+    this.hotelStars = 1;
+    this.address = {
+      street: '',
+      zip_code: '',
+      city: ''
+    };
+    this.showCreateForm = false;
   }
 
-  createHotel() {
-    if (!this.newHotel.name || !this.newHotel.stars) {
-      this.error = 'Name und Sterne sind erforderlich.';
-      return;
-    }
+  saveHotel() {
+    const isEdit = !!this.selectedHotel;
 
-    this.hotelService.createHotel(this.newHotel as Hotel).subscribe({
-      next: () => {
-        this.success = 'Hotel erfolgreich erstellt.';
-        this.newHotel = {};
-        this.loadHotels();
+    this.addressService.createAddress(this.address).subscribe({
+      next: (savedAddress) => {
+        const hotelPayload = {
+          name: this.hotelName,
+          stars: this.hotelStars,
+          address_id: savedAddress.id
+        };
+
+        const request$ = isEdit
+          ? this.hotelService.updateHotel(this.selectedHotel!.id, hotelPayload)
+          : this.hotelService.createHotel(hotelPayload);
+
+        request$.subscribe({
+          next: () => {
+            this.success = isEdit ? 'Hotel aktualisiert!' : 'Hotel erfolgreich erstellt!';
+            this.error = '';
+            this.cancelEdit();
+            this.loadHotels();
+          },
+          error: () => {
+            this.error = isEdit
+              ? 'Fehler beim Aktualisieren des Hotels.'
+              : 'Fehler beim Erstellen des Hotels.';
+            this.success = '';
+          }
+        });
       },
-      error: () => this.error = 'Fehler beim Erstellen des Hotels.'
+      error: () => {
+        this.error = 'Fehler beim Speichern der Adresse.';
+      }
     });
   }
 
   deleteHotel(id: number) {
     this.hotelService.deleteHotel(id).subscribe({
       next: () => {
-        this.success = 'Hotel gelöscht.';
+        this.success = 'Hotel erfolgreich gelöscht.';
         this.loadHotels();
       },
-      error: () => this.error = 'Fehler beim Löschen des Hotels.'
+      error: () => {
+        this.error = 'Fehler beim Löschen des Hotels.';
+      }
     });
   }
 }
