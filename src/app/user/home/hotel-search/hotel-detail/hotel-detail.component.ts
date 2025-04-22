@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Room} from '../../../../models/room.model';
 import {RoomService} from '../../../../services/room.service';
 import {FormsModule} from '@angular/forms';
 import {RoomCardComponent} from '../../room-card/room-card.component';
 import {CommonModule} from '@angular/common';
+import {RoomOut} from '../../../../models/room.model';
 
 @Component({
   selector: 'app-hotel-detail',
@@ -17,7 +17,7 @@ import {CommonModule} from '@angular/common';
 })
 export class HotelDetailComponent implements OnInit {
   hotelId!: number;
-  rooms: Room[] = [];
+  rooms: RoomOut[] = [];
   checkInDate: string = '';
   checkOutDate: string = '';
   capacity: number | null = null;

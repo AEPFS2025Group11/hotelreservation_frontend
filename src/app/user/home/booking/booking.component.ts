@@ -5,7 +5,7 @@ import { AuthService } from '../../../auth/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {RoomService} from '../../../services/room.service';
-import {Room} from '../../../models/room.model';
+import {RoomOut} from '../../../models/room.model';
 
 @Component({
   selector: 'app-booking',
@@ -21,7 +21,7 @@ export class BookingComponent implements OnInit {
 
   roomId!: string | null;
   private roomService: RoomService = inject(RoomService);
-  room: Room | undefined;
+  room: RoomOut | undefined;
 
   constructor(private route: ActivatedRoute) {}
 

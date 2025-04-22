@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Booking} from '../models/booking.model';
 import {Observable} from 'rxjs';
+import {BookingOut} from '../models/booking.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ export class BookingService {
 
   constructor(private http: HttpClient) {}
 
-  getUserBookings(userId: number | undefined): Observable<Booking[]> {
-    return this.http.get<Booking[]>(`${this.userApi}/${userId}/bookings`);
+  getUserBookings(userId: number | undefined): Observable<BookingOut[]> {
+    return this.http.get<BookingOut[]>(`${this.userApi}/${userId}/bookings`);
   }
 
   createBooking(booking: {
@@ -29,5 +29,9 @@ export class BookingService {
 
   cancelBooking(id: number) {
     return this.http.patch(`${this.bookingApi}/${id}/cancel`,null);
+  }
+
+  getAllBookingsAdmin(): Observable<BookingOut[]> {
+    return this.http.get<BookingOut[]>(this.bookingApi);
   }
 }

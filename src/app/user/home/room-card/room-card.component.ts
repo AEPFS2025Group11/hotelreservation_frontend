@@ -1,7 +1,7 @@
 import {Component, inject, Input} from '@angular/core';
-import {Room} from '../../../models/room.model';
 import {CommonModule} from '@angular/common';
 import {Router} from '@angular/router';
+import {RoomOut} from '../../../models/room.model';
 
 @Component({
   selector: 'app-room-card',
@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
   templateUrl: './room-card.component.html'
 })
 export class RoomCardComponent {
-  @Input() room!: Room;
+  @Input() room!: RoomOut;
   @Input() checkInDate!: string;
   @Input() checkOutDate!: string;
 

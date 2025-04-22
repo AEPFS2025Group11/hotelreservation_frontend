@@ -1,10 +1,10 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {Booking} from '../../../models/booking.model';
 import {BookingService} from '../../../services/booking.service';
 import {CommonModule} from '@angular/common';
 import {AuthService} from '../../../auth/auth.service';
 import {Router} from '@angular/router';
 import {ReviewService} from '../../../services/review.service';
+import {BookingOut} from '../../../models/booking.model';
 
 @Component({
   selector: 'app-my-bookings',
@@ -14,7 +14,7 @@ import {ReviewService} from '../../../services/review.service';
   templateUrl: './my-bookings.component.html'
 })
 export class MyBookingsComponent implements OnInit {
-  bookings: Booking[] = [];
+  bookings: BookingOut[] = [];
   error: string | null = null;
   private authService: AuthService = inject(AuthService);
   private reviewService: ReviewService = inject(ReviewService);

@@ -2,9 +2,9 @@ export interface User {
   id?: number;
   email: string;
   role: string;
-  firstName?: string;
-  lastName?: string;
-  isActive?: boolean;
+  first_name?: string;
+  last_name?: string;
+  is_active?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }

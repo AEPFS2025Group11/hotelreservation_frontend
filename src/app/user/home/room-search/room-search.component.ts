@@ -3,8 +3,8 @@ import {FormsModule} from '@angular/forms';
 import {RoomCardComponent} from '../room-card/room-card.component';
 import {CommonModule} from '@angular/common';
 import {Router} from '@angular/router';
-import {Room} from '../../../models/room.model';
 import {RoomService} from '../../../services/room.service';
+import {RoomOut} from '../../../models/room.model';
 
 @Component({
   selector: 'app-room-search',
@@ -21,7 +21,7 @@ export class RoomSearchComponent implements OnInit{
   checkInDate: string = '';
   checkOutDate: string = '';
 
-  filteredRooms: Room[] = [];
+  filteredRooms: RoomOut[] = [];
   error: string | null = null;
 
   constructor(private roomService: RoomService) {
@@ -51,7 +51,7 @@ export class RoomSearchComponent implements OnInit{
     });
   }
 
-  selectRoom(room: Room) {
+  selectRoom(room: RoomOut) {
     this.router.navigate(['home/rooms', room.id]).then();
   }
 }

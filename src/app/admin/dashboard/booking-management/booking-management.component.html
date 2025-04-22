@@ -1,0 +1,43 @@
+<div class="max-w-7xl mx-auto p-6">
+  <h2 class="text-2xl font-bold text-blue-800 mb-4">📊 Alle Buchungen (Admin)</h2>
+
+  <div *ngIf="error" class="text-red-600 mb-4">{{ error }}</div>
+
+  <div class="overflow-x-auto" *ngIf="bookings.length > 0">
+    <table class="w-full text-sm text-left text-gray-700 bg-white rounded-lg shadow">
+      <thead class="bg-gray-100 text-xs uppercase">
+      <tr>
+        <th class="px-4 py-2">#</th>
+        <th class="px-4 py-2">Hotel</th>
+        <th class="px-4 py-2">Zimmer</th>
+        <th class="px-4 py-2">Gast</th>
+        <th class="px-4 py-2">Check-In</th>
+        <th class="px-4 py-2">Check-Out</th>
+        <th class="px-4 py-2">Status</th>
+        <th class="px-4 py-2 text-right">Betrag</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let booking of bookings" class="border-b hover:bg-gray-50">
+        <td class="px-4 py-2">{{ booking.id }}</td>
+        <td class="px-4 py-2">{{ booking.room.hotel.name }}</td>
+        <td class="px-4 py-2">{{ booking.room.room_number }}</td>
+        <td class="px-4 py-2">{{ booking.user.first_name }} {{ booking.user.last_name }}</td>
+        <td class="px-4 py-2">{{ booking.check_in | date:'dd.MM.yyyy' }}</td>
+        <td class="px-4 py-2">{{ booking.check_out | date:'dd.MM.yyyy' }}</td>
+        <td class="px-4 py-2">
+            <span [ngClass]="{
+              'text-green-700': !booking.is_cancelled,
+              'text-red-600': booking.is_cancelled
+            }">
+              {{ booking.is_cancelled ? 'Storniert' : 'Aktiv' }}
+            </span>
+        </td>
+        <td class="px-4 py-2 text-right font-semibold">
+          {{ booking.total_amount | currency:'CHF'}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

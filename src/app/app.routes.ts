@@ -14,6 +14,7 @@ import {InvoiceDetailComponent} from './user/home/my-bookings/invoice/invoice.co
 import {ReviewComponent} from './user/home/my-bookings/review/review.component';
 import {HotelManagementComponent} from './admin/dashboard/hotel-management/hotel-management.component';
 import {StatisticsComponent} from './admin/dashboard/statistics/statistics.component';
+import {BookingManagementComponent} from './admin/dashboard/booking-management/booking-management.component';
 
 export const routes: Routes = [
     {
@@ -54,6 +55,7 @@ export const routes: Routes = [
       data: {role: 'admin'},
       children: [
         {path: 'manage-hotels', component: HotelManagementComponent},
+        {path: 'manage-bookings', component: BookingManagementComponent},
         {path: 'statistics', component: StatisticsComponent},
       ]
     },

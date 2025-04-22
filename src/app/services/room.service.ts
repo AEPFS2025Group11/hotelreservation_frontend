@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
-import {Room} from '../models/room.model';
+import {RoomOut} from '../models/room.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class RoomService {
     capacity: number | null;
     checkIn: string | null;
     checkOut: string | null
-  }): Observable<Room[]> {
+  }): Observable<RoomOut[]> {
     let params = new HttpParams();
 
     if (filters.capacity) {
@@ -28,7 +28,7 @@ export class RoomService {
       params = params.set('check_out', filters.checkOut);
     }
 
-    return this.http.get<Room[]>(`http://localhost:5049/api/hotels/${hotelId}/rooms`, { params });
+    return this.http.get<RoomOut[]>(`http://localhost:5049/api/hotels/${hotelId}/rooms`, { params });
   }
 
   searchRooms(filters: {
@@ -37,7 +37,7 @@ export class RoomService {
     guests?: number;
     checkIn?: string;
     checkOut?: string;
-  }): Observable<Room[]> {
+  }): Observable<RoomOut[]> {
     let params = new HttpParams();
 
     if (filters.city) {
@@ -56,11 +56,11 @@ export class RoomService {
       params = params.set('check_out', filters.checkOut);
     }
 
-    return this.http.get<Room[]>(this.apiUrl, { params });
+    return this.http.get<RoomOut[]>(this.apiUrl, { params });
   }
 
-  getRoom(room_id: string | null): Observable<Room> {
-    return this.http.get<Room>(`${this.apiUrl}/${room_id}`).pipe(
+  getRoom(room_id: string | null): Observable<RoomOut> {
+    return this.http.get<RoomOut>(`${this.apiUrl}/${room_id}`).pipe(
       catchError(error => {
         console.error('Fehler beim Laden des Zimmers', error);
         return throwError(() => error);
