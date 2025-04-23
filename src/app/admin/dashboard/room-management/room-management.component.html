@@ -1,0 +1,32 @@
+<div class="max-w-7xl mx-auto p-6">
+  <h2 class="text-2xl font-bold text-blue-800 mb-6">🛏️ Zimmerübersicht</h2>
+
+  <div *ngIf="error" class="text-red-600">{{ error }}</div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm text-left bg-white shadow rounded-lg">
+      <thead class="bg-gray-100 text-xs text-gray-600 uppercase">
+      <tr>
+        <th class="p-3">Zimmer</th>
+        <th class="p-3">Hotel</th>
+        <th class="p-3">Typ</th>
+        <th class="p-3">Ausstattung</th>
+        <th class="p-3 text-right">Preis/Nacht</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let room of rooms" class="border-t hover:bg-gray-50">
+        <td class="p-3 font-medium">{{ room.room_number }}</td>
+        <td class="p-3">{{ room.hotel.name }}</td>
+        <td class="p-3">{{ room.type.description }}</td>
+        <td class="p-3">
+            <span *ngFor="let f of room.facilities; let last = last">
+              {{ f.facility_name }}<span *ngIf="!last">, </span>
+            </span>
+        </td>
+        <td class="p-3 text-right">{{ room.price_per_night | currency:'CHF' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

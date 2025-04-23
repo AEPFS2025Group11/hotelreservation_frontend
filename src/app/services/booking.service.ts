@@ -7,13 +7,13 @@ import {BookingOut} from '../models/booking.model';
   providedIn: 'root'
 })
 export class BookingService {
-  private userApi = 'http://localhost:5049/api/users';
-  private bookingApi = 'http://localhost:5049/api/bookings';
+  private userApi = 'http://localhost:5049/api/users/';
+  private bookingApi = 'http://localhost:5049/api/bookings/';
 
   constructor(private http: HttpClient) {}
 
   getUserBookings(userId: number | undefined): Observable<BookingOut[]> {
-    return this.http.get<BookingOut[]>(`${this.userApi}/${userId}/bookings`);
+    return this.http.get<BookingOut[]>(`${this.userApi}/${userId}/bookings/`);
   }
 
   createBooking(booking: {
@@ -28,7 +28,7 @@ export class BookingService {
   }
 
   cancelBooking(id: number) {
-    return this.http.patch(`${this.bookingApi}/${id}/cancel`,null);
+    return this.http.patch(`${this.bookingApi}${id}/cancel`,null);
   }
 
   getAllBookingsAdmin(): Observable<BookingOut[]> {

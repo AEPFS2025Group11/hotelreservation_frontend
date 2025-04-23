@@ -67,4 +67,13 @@ export class RoomService {
       })
     );
   }
+
+  getAllRooms() {
+    return this.http.get<RoomOut[]>(`${this.apiUrl}/admin`).pipe(
+      catchError(error => {
+        console.error('Fehler beim Laden der Zimmer', error);
+        return throwError(() => error);
+      })
+    );
+  }
 }
