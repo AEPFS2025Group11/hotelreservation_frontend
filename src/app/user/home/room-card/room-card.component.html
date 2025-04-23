@@ -18,7 +18,9 @@
 
     <p>
       <strong>Preis/Nacht:</strong>
-      {{ room.dynamic_price_per_night ?? room.price_per_night }} CHF
+      {{
+        room.dynamic_price_per_night != null ? room.dynamic_price_per_night : room.price_per_night
+      }} CHF
     </p>
 
     <p *ngIf="room.total_price">

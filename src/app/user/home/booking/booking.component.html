@@ -4,11 +4,13 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
       <label class="block mb-1 font-medium text-gray-700">Check-In</label>
-      <input type="date" [(ngModel)]="checkInDate" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input type="date" [(ngModel)]="checkInDate"
+             class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"/>
     </div>
     <div>
       <label class="block mb-1 font-medium text-gray-700">Check-Out</label>
-      <input type="date" [(ngModel)]="checkOutDate" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input type="date" [(ngModel)]="checkOutDate"
+             class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"/>
     </div>
   </div>
 
@@ -28,7 +30,7 @@
 <div class="max-w-xl mx-auto mt-8 p-6 bg-gray-50 border border-gray-200 rounded-xl shadow space-y-4">
   <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
     <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10m-9 4h4m1 4h4" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10m-9 4h4m1 4h4"/>
     </svg>
     Buchungsübersicht
   </h3>
@@ -49,7 +51,8 @@
     </p>
 
     <p *ngIf="room">
-      <strong>Preis/Nacht:</strong> {{ room.dynamic_price_per_night ?? room.price_per_night }} CHF
+      <strong>Preis/Nacht:</strong> {{ room.dynamic_price_per_night != null ? room.dynamic_price_per_night : room.price_per_night }}
+      CHF
     </p>
 
     <p *ngIf="checkInDate && checkOutDate && room" class="font-semibold text-blue-600">
