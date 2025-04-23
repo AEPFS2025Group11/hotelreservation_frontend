@@ -1,7 +1,6 @@
 <div class="max-w-6xl mx-auto p-6 space-y-10 bg-gray-50 rounded-xl shadow-inner">
   <h2 class="text-3xl font-bold text-blue-800">🏨 Hotelverwaltung (Admin)</h2>
 
-  <!-- ➕ Hotel hinzufügen Button -->
   <button
     *ngIf="!showCreateForm && !selectedHotel"
     (click)="showCreateForm = true"
@@ -10,7 +9,6 @@
     ➕ Hotel hinzufügen
   </button>
 
-  <!-- Formular für Hinzufügen oder Bearbeiten -->
   <div *ngIf="showCreateForm || selectedHotel" class="bg-white p-6 rounded-lg shadow space-y-5">
     <h3 class="text-xl font-semibold text-gray-800">
       {{ selectedHotel ? '✏️ Hotel bearbeiten' : '➕ Neues Hotel hinzufügen' }}
@@ -63,7 +61,6 @@
     <p *ngIf="error" class="text-red-600 mt-2 font-medium">{{ error }}</p>
   </div>
 
-  <!-- Tabelle -->
   <table *ngIf="hotels.length > 0" class="w-full text-sm border shadow rounded-lg">
     <thead class="bg-gray-100">
     <tr>
