@@ -20,7 +20,7 @@ import {RoomManagementComponent} from './admin/dashboard/room-management/room-ma
 export const routes: Routes = [
     {
       path: '',
-      redirectTo: 'login',
+      redirectTo: 'home/hotels',
       pathMatch: 'full'
     },
     {
@@ -37,7 +37,9 @@ export const routes: Routes = [
         {path: 'hotels', component: HotelSearchComponent},
         {path: 'hotels/:id', component: HotelDetailComponent},
         {path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent},
-        {path: 'my-bookings', component: MyBookingsComponent},
+        {
+          path: 'my-bookings', component: MyBookingsComponent
+        },
         {path: 'rooms', component: RoomSearchComponent},
         {
           path: 'invoices/:bookingId',

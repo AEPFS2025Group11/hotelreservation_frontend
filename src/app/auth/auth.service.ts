@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {BehaviorSubject, map, Observable} from 'rxjs';
-import { tap } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, catchError, map, Observable, of} from 'rxjs';
+import {tap} from 'rxjs/operators';
 import {AuthResponse, LoginRequest, RegisterRequest, User} from '../models/user.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthService {
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   login(loginRequest: LoginRequest): Observable<any> {
     return this.http.post<AuthResponse>('http://localhost:5049/api/auth/login', loginRequest).pipe(
@@ -20,6 +21,7 @@ export class AuthService {
       })
     );
   }
+
 
   register(registerRequest: RegisterRequest) {
     return this.http.post<AuthResponse>('http://localhost:5049/api/auth/register', registerRequest).pipe(

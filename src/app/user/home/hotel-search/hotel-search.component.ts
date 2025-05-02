@@ -22,14 +22,22 @@ export class HotelSearchComponent implements OnInit {
   filteredHotels: HotelOut[] = [];
   error: string | null = null;
 
+  router: Router = inject(Router);
+
   constructor(private hotelService: HotelService) {
   }
+
 
   ngOnInit(): void {
     this.search();
   }
 
-  router: Router = inject(Router);
+  showSearch = false;
+
+  toggleSearch() {
+    this.showSearch = !this.showSearch;
+  }
+
 
   search(): void {
     this.hotelService.searchHotels({

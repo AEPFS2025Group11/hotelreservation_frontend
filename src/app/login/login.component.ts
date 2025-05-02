@@ -2,18 +2,20 @@ import {Component} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   imports: [
     FormsModule,
+    NgIf,
   ]
 })
 export class LoginComponent {
   email = '';
   password = '';
-  private errorMessage: string | undefined;
+  protected errorMessage: string | undefined;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -40,9 +42,9 @@ export class LoginComponent {
         const role = response.user.role;
 
         if (role === 'admin') {
-          this.router.navigate(['/dashboard/manage-hotels']);
+          this.router.navigate(['/dashboard/manage-hotels']).then();
         } else {
-          this.router.navigate(['/home/hotels']);
+          this.router.navigate(['/home/hotels']).then();
         }
       },
       error: err => {
@@ -52,6 +54,6 @@ export class LoginComponent {
   }
 
   navigateToRegister() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/register']).then();
   }
 }

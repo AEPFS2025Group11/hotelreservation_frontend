@@ -23,6 +23,7 @@ export class RoomSearchComponent implements OnInit{
 
   filteredRooms: RoomOut[] = [];
   error: string | null = null;
+  showSearch = false;
 
   constructor(private roomService: RoomService) {
   }
@@ -32,6 +33,10 @@ export class RoomSearchComponent implements OnInit{
   }
 
   router: Router = inject(Router);
+
+  toggleSearch() {
+    this.showSearch = !this.showSearch;
+  }
 
   search(): void {
     this.roomService.searchRooms({
