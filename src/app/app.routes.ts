@@ -2,7 +2,6 @@ import {Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {AuthGuard} from './auth/auth.guard';
 import {DashboardComponent} from './admin/dashboard/dashboard.component';
-import {UnauthorizedComponent} from './util/unauthorized/unauthorized.component';
 import {HomeComponent} from './user/home/home.component';
 import {RegisterComponent} from './register/register.component';
 import {HotelSearchComponent} from './user/home/hotel-search/hotel-search.component';
@@ -63,10 +62,5 @@ export const routes: Routes = [
         {path: 'statistics', component: StatisticsComponent},
       ]
     },
-    {
-      path: 'unauthorized',
-      component:
-      UnauthorizedComponent
-    }
   ]
 ;
