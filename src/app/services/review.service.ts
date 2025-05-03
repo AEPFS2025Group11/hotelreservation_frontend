@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Review} from '../models/review.model';
+import {ReviewIn, ReviewOut} from '../models/review.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,23 +11,23 @@ export class ReviewService {
 
   constructor(private http: HttpClient) {}
 
-  createReview(review: Review): Observable<Review> {
-    return this.http.post<Review>(this.apiUrl, review);
+  createReview(review: ReviewIn): Observable<ReviewOut> {
+    return this.http.post<ReviewOut>(this.apiUrl, review);
   }
 
-  getByBookingId(bookingId: number): Observable<Review> {
-    return this.http.get<Review>(`${this.apiUrl}/bookings/${bookingId}`);
+  getByBookingId(bookingId: number): Observable<ReviewOut> {
+    return this.http.get<ReviewOut>(`${this.apiUrl}/bookings/${bookingId}`);
   }
 
-  getReviewsByHotel(hotelId: number): Observable<Review[]> {
-    return this.http.get<Review[]>(`${this.apiUrl}/hotel/${hotelId}`);
+  getReviewsByHotel(hotelId: number): Observable<ReviewOut[]> {
+    return this.http.get<ReviewOut[]>(`${this.apiUrl}/hotel/${hotelId}`);
   }
 
-  getReviewsByUser(userId: number): Observable<Review[]> {
-    return this.http.get<Review[]>(`${this.apiUrl}/user/${userId}`);
+  getReviewsByUser(userId: number): Observable<ReviewOut[]> {
+    return this.http.get<ReviewOut[]>(`${this.apiUrl}/user/${userId}`);
   }
 
-  deleteReview(reviewId: number): Observable<Review> {
-    return this.http.delete<Review>(`${this.apiUrl}/${reviewId}`);
+  deleteReview(reviewId: number): Observable<ReviewOut> {
+    return this.http.delete<ReviewOut>(`${this.apiUrl}/${reviewId}`);
   }
 }

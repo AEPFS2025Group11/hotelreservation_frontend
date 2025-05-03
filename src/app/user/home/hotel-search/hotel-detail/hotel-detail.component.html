@@ -39,3 +39,24 @@
     />
   </div>
 </section>
+
+<div *ngIf="reviews?.length" class="mt-8 space-y-4">
+  <h3 class="text-xl font-semibold text-blue-700 flex items-center gap-2">
+    💬 Nutzerbewertungen
+  </h3>
+
+  <div *ngFor="let review of reviews" class="p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm space-y-2">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-1 text-yellow-500">
+        <ng-container *ngFor="let star of [1,2,3,4,5]">
+          <svg *ngIf="review.rating >= star" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.076 3.305a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.076 3.305c.3.921-.755 1.688-1.54 1.118L10 13.011l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.075-3.305a1 1 0 00-.364-1.118L3.572 8.732c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.077-3.305z"/>
+          </svg>
+        </ng-container>
+      </div>
+    </div>
+    <p class="text-sm text-gray-700 italic">„{{ review.comment }}“</p>
+    <div class="text-xs text-gray-500">{{ review.created_at | date:'mediumDate' }}</div>
+  </div>
+</div>
+
