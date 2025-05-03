@@ -37,7 +37,8 @@ export const routes: Routes = [
         {path: 'hotels/:id', component: HotelDetailComponent},
         {path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent},
         {
-          path: 'my-bookings', component: MyBookingsComponent
+          path: 'my-bookings', component: MyBookingsComponent, canActivate: [AuthGuard],
+          data: {role: 'guest'}
         },
         {path: 'rooms', component: RoomSearchComponent},
         {
