@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
-import {RoomOut} from '../models/room.model';
+import {RoomIn, RoomOut} from '../models/room.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
-  private apiUrl = 'http://localhost:5049/api/rooms';
+  private apiUrl = 'http://localhost:5049/api/rooms/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getRoomsByHotel(hotelId: number, filters: {
     capacity: number | null;
@@ -28,7 +29,7 @@ export class RoomService {
       params = params.set('check_out', filters.checkOut);
     }
 
-    return this.http.get<RoomOut[]>(`http://localhost:5049/api/hotels/${hotelId}/rooms`, { params });
+    return this.http.get<RoomOut[]>(`http://localhost:5049/api/hotels/${hotelId}/rooms`, {params});
   }
 
   searchRooms(filters: {
@@ -56,11 +57,11 @@ export class RoomService {
       params = params.set('check_out', filters.checkOut);
     }
 
-    return this.http.get<RoomOut[]>(this.apiUrl, { params });
+    return this.http.get<RoomOut[]>(this.apiUrl, {params});
   }
 
   getRoom(room_id: string | null): Observable<RoomOut> {
-    return this.http.get<RoomOut>(`${this.apiUrl}/${room_id}`).pipe(
+    return this.http.get<RoomOut>(`${this.apiUrl}${room_id}`).pipe(
       catchError(error => {
         console.error('Fehler beim Laden des Zimmers', error);
         return throwError(() => error);
@@ -69,11 +70,24 @@ export class RoomService {
   }
 
   getAllRooms() {
-    return this.http.get<RoomOut[]>(`${this.apiUrl}/admin`).pipe(
+    return this.http.get<RoomOut[]>(`${this.apiUrl}admin`).pipe(
       catchError(error => {
         console.error('Fehler beim Laden der Zimmer', error);
         return throwError(() => error);
       })
     );
+  }
+
+  create(payload: RoomIn): Observable<RoomOut> {
+    return this.http.post<RoomOut>(`${this.apiUrl}`, payload);
+  }
+
+  deleteRoom(id: number) {
+    return this.http.delete<RoomOut>(`${this.apiUrl}${id}`);
+  }
+
+
+  update(id: number, room: RoomIn): Observable<RoomOut> {
+    return this.http.put<RoomOut>(`${this.apiUrl}${id}`, room);
   }
 }

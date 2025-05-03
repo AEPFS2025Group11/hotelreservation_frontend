@@ -1,7 +1,87 @@
 <div class="max-w-7xl mx-auto p-6">
   <h2 class="text-2xl font-bold text-blue-800 mb-6">🛏️ Zimmerübersicht (Admin)</h2>
 
-  <div *ngIf="error" class="text-red-600">{{ error }}</div>
+  <button
+    *ngIf="!showCreateForm && !selectedRoom"
+    (click)="showCreateForm = true"
+    class="bg-blue-600 text-white px-5 py-2 rounded font-medium shadow hover:bg-blue-700 transition"
+  >
+    ➕ Hotel hinzufügen
+  </button>
+
+  <div *ngIf="showCreateForm || selectedRoom" class="bg-white p-6 rounded-lg shadow space-y-5">
+    <h3 class="text-xl font-semibold text-gray-800">
+      {{ selectedRoom ? '✏️ Hotel bearbeiten' : '➕ Neues Hotel hinzufügen' }}
+    </h3>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="relative">
+        <label class="block font-medium mb-1">Hotel</label>
+        <input
+          type="text"
+          [(ngModel)]="hotelSearch"
+          (focus)="showDropdown = true"
+          (blur)="hideDropdown()"
+          placeholder="Hotel suchen..."
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        <ul
+          *ngIf="showDropdown && hotels.length > 0"
+          class="absolute z-10 bg-white border border-gray-300 w-full mt-1 max-h-60 overflow-y-auto rounded shadow"
+        >
+          <li
+            *ngFor="let hotel of hotels"
+            (mousedown)="selectHotel(hotel)"
+            class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+          >
+            {{ hotel.name }}
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <label class="block font-medium mb-1">Zimmernummer</label>
+        <input [(ngModel)]="roomNumber" type="text"
+               (input)="resetFeedback()"
+               class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+      </div>
+      <div>
+        <label class="block font-medium mb-1">Zimmertyp</label>
+        <select
+          [(ngModel)]="selectedRoomTypeId"
+          (change)="resetFeedback()"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option *ngFor="let type of roomTypes" [ngValue]="type.id">
+            {{ type.description }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <label class="block font-medium mb-1">Preis pro Nacht (CHF)</label>
+        <input [(ngModel)]="pricePerNight" type="number" step="0.05" min="1"
+               (input)="resetFeedback()"
+               class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+    </div>
+
+
+    <div class="flex justify-between mt-4">
+      <button (click)="saveRoom()"
+              [disabled]="isLoading"
+              class="bg-blue-600 text-white font-semibold px-5 py-2 rounded shadow hover:bg-blue-700 transition">
+        💾 {{ selectedRoom ? 'Speichern' : 'Anlegen' }}
+      </button>
+      <button (click)="cancelEdit()"
+              class="text-gray-700 hover:underline font-medium">
+        ✖ Abbrechen
+      </button>
+    </div>
+
+    <p *ngIf="success" class="text-green-600 mt-2 font-medium">{{ success }}</p>
+    <p *ngIf="error" class="text-red-600 mt-2 font-medium">{{ error }}</p>
+  </div>
 
   <div class="overflow-x-auto">
     <table class="w-full text-sm text-left bg-white shadow rounded-lg">
@@ -11,7 +91,8 @@
         <th class="p-3">Hotel</th>
         <th class="p-3">Typ</th>
         <th class="p-3">Ausstattung</th>
-        <th class="p-3 text-right">Preis/Nacht</th>
+        <th class="p-3">Preis/Nacht</th>
+        <th class="p-3 text-right">Aktionen</th>
       </tr>
       </thead>
       <tbody>
@@ -25,6 +106,10 @@
             </span>
         </td>
         <td class="p-3 text-right">{{ room.price_per_night | currency:'CHF' }}</td>
+        <td class="p-3 space-x-2">
+          <button class="text-blue-600 hover:underline" (click)="editRoom(room)">Bearbeiten</button>
+          <button class="text-red-600 hover:underline" (click)="deleteRoom(room.id)">Löschen</button>
+        </td>
       </tr>
       </tbody>
     </table>
