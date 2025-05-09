@@ -65,7 +65,7 @@ export class BookingComponent implements OnInit {
 
     this.bookingService.createBooking({
       user_id: userId,
-      room_id: this.roomId, // cast to number
+      room_id: this.roomId,
       check_in: this.checkInDate,
       check_out: this.checkOutDate,
       is_cancelled: false,
@@ -119,8 +119,8 @@ export class BookingComponent implements OnInit {
       month: '2-digit'
     });
 
-    const from = formatter.format(checkIn);   // → z. B. 10.07.
-    const to = formatter.format(checkOut);    // → z. B. 13.07.
+    const from = formatter.format(checkIn);
+    const to = formatter.format(checkOut);
 
     return `${nights} Nacht${nights > 1 ? 'e' : ''}, ${from}–${to}`;
   }

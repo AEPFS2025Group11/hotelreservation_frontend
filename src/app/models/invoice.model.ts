@@ -1,5 +1,5 @@
 export interface Invoice {
-    id: number
+  id: number
   booking_id: number
   issue_date: string
   total_amount: number

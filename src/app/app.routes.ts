@@ -16,6 +16,7 @@ import {StatisticsComponent} from './admin/dashboard/statistics/statistics.compo
 import {BookingManagementComponent} from './admin/dashboard/booking-management/booking-management.component';
 import {RoomManagementComponent} from './admin/dashboard/room-management/room-management.component';
 import {BookingDetailsComponent} from './admin/dashboard/booking-management/booking-details/booking-details.component';
+import {PaymentComponent} from './user/home/my-bookings/payment/payment.component';
 
 export const routes: Routes = [
     {
@@ -42,7 +43,8 @@ export const routes: Routes = [
         {
           path: 'my-bookings', component: MyBookingsComponent, canActivate: [AuthGuard],
           data: {role: 'guest'}
-        },
+        }, {path: 'my-bookings/:bookingId/pay', component: PaymentComponent},
+
         {path: 'rooms', component: RoomSearchComponent},
         {
           path: 'invoices/:bookingId',

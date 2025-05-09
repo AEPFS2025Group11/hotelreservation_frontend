@@ -5,6 +5,7 @@ import {AuthService} from '../../../auth/auth.service';
 import {Router} from '@angular/router';
 import {ReviewService} from '../../../services/review.service';
 import {BookingOut} from '../../../models/booking.model';
+import {PaymentService} from '../../../services/payment.service';
 
 @Component({
   selector: 'app-my-bookings',
@@ -72,4 +73,7 @@ export class MyBookingsComponent implements OnInit {
     });
   }
 
+  payBooking(id: number) {
+    this.router.navigate(['home/my-bookings',id, 'pay']).then()
+  }
 }
