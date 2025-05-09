@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ReviewService} from '../../../../services/review.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-review',
@@ -20,6 +20,8 @@ export class ReviewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private reviewService: ReviewService) {
   }
+
+  private router: Router = inject(Router)
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('bookingId');
@@ -44,9 +46,12 @@ export class ReviewComponent implements OnInit {
       next: () => {
         this.submitted = true;
         this.error = '';
+        setTimeout(() => {
+          this.router.navigate(['/home/hotels']).then();
+        }, 1500);
       },
       error: (err) => {
-        this.error = 'Bewertung konnte nicht gespeichert werden.';
+        this.error = err.error.detail;
         console.error(err);
       }
     });

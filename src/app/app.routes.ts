@@ -15,6 +15,7 @@ import {HotelManagementComponent} from './admin/dashboard/hotel-management/hotel
 import {StatisticsComponent} from './admin/dashboard/statistics/statistics.component';
 import {BookingManagementComponent} from './admin/dashboard/booking-management/booking-management.component';
 import {RoomManagementComponent} from './admin/dashboard/room-management/room-management.component';
+import {BookingDetailsComponent} from './admin/dashboard/booking-management/booking-details/booking-details.component';
 
 export const routes: Routes = [
     {
@@ -35,7 +36,9 @@ export const routes: Routes = [
       children: [
         {path: 'hotels', component: HotelSearchComponent},
         {path: 'hotels/:id', component: HotelDetailComponent},
-        {path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent},
+        {
+          path: 'hotels/:id/rooms/:roomId/book', component: BookingComponent
+        },
         {
           path: 'my-bookings', component: MyBookingsComponent, canActivate: [AuthGuard],
           data: {role: 'guest'}
@@ -58,7 +61,14 @@ export const routes: Routes = [
       data: {role: 'admin'},
       children: [
         {path: 'manage-hotels', component: HotelManagementComponent},
-        {path: 'manage-bookings', component: BookingManagementComponent},
+        {
+          path: 'manage-bookings',
+          component: BookingManagementComponent
+        },
+        {
+          path: 'manage-bookings/:bookingId',
+          component: BookingDetailsComponent
+        },
         {path: 'manage-rooms', component: RoomManagementComponent},
         {path: 'statistics', component: StatisticsComponent},
       ]

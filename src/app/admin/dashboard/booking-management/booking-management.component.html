@@ -5,36 +5,53 @@
 
   <div class="overflow-x-auto" *ngIf="bookings.length > 0">
     <table class="w-full text-sm text-left text-gray-700 bg-white rounded-lg shadow">
-      <thead class="bg-gray-100 text-xs uppercase">
+      <thead class="bg-gray-100 text-xs uppercase tracking-wider text-gray-600">
       <tr>
-        <th class="px-4 py-2">#</th>
-        <th class="px-4 py-2">Hotel</th>
-        <th class="px-4 py-2">Zimmer</th>
-        <th class="px-4 py-2">Gast</th>
-        <th class="px-4 py-2">Check-In</th>
-        <th class="px-4 py-2">Check-Out</th>
-        <th class="px-4 py-2">Status</th>
-        <th class="px-4 py-2 text-right">Betrag</th>
+        <th class="px-4 py-3">#</th>
+        <th class="px-4 py-3">Hotel</th>
+        <th class="px-4 py-3">Zimmer</th>
+        <th class="px-4 py-3">Gast</th>
+        <th class="px-4 py-3">Check-In</th>
+        <th class="px-4 py-3">Check-Out</th>
+        <th class="px-4 py-3">Status</th>
+        <th class="px-4 py-3 text-right">Betrag</th>
+        <th class="px-4 py-3 text-center">Aktionen</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let booking of bookings" class="border-b hover:bg-gray-50">
-        <td class="px-4 py-2">{{ booking.id }}</td>
-        <td class="px-4 py-2">{{ booking.room.hotel.name }}</td>
-        <td class="px-4 py-2">{{ booking.room.room_number }}</td>
-        <td class="px-4 py-2">{{ booking.user.first_name }} {{ booking.user.last_name }}</td>
-        <td class="px-4 py-2">{{ booking.check_in | date:'dd.MM.yyyy' }}</td>
-        <td class="px-4 py-2">{{ booking.check_out | date:'dd.MM.yyyy' }}</td>
-        <td class="px-4 py-2">
-            <span [ngClass]="{
-              'text-green-700': !booking.is_cancelled,
-              'text-red-600': booking.is_cancelled
-            }">
+      <tr
+        *ngFor="let booking of bookings"
+        class="border-b even:bg-gray-50 hover:bg-blue-50 cursor-pointer transition"
+        [routerLink]="[booking.id]"
+      >
+        <td class="px-4 py-3 font-medium">{{ booking.id }}</td>
+        <td class="px-4 py-3">{{ booking.room.hotel.name }}</td>
+        <td class="px-4 py-3">{{ booking.room.room_number }}</td>
+        <td class="px-4 py-3">{{ booking.user.first_name }} {{ booking.user.last_name }}</td>
+        <td class="px-4 py-3">{{ booking.check_in | date:'dd.MM.yyyy' }}</td>
+        <td class="px-4 py-3">{{ booking.check_out | date:'dd.MM.yyyy' }}</td>
+        <td class="px-4 py-3">
+            <span
+              class="inline-block px-2 py-1 text-xs font-semibold rounded-full"
+              [ngClass]="{
+                'bg-green-100 text-green-800': !booking.is_cancelled,
+                'bg-red-100 text-red-700': booking.is_cancelled
+              }"
+            >
               {{ booking.is_cancelled ? 'Storniert' : 'Aktiv' }}
             </span>
         </td>
-        <td class="px-4 py-2 text-right font-semibold">
-          {{ booking.total_amount | currency:'CHF'}}
+        <td class="px-4 py-3 text-right font-semibold">
+          {{ booking.total_amount | currency:'CHF' }}
+        </td>
+        <td class="px-4 py-3 text-center">
+          <button
+            (click)="deleteBooking(booking.id); $event.stopPropagation();"
+            class="text-red-600 hover:text-red-800 transition"
+            title="Buchung löschen"
+          >
+            🗑️
+          </button>
         </td>
       </tr>
       </tbody>

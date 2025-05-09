@@ -10,7 +10,8 @@ export class BookingService {
   private userApi = 'http://localhost:5049/api/users/';
   private bookingApi = 'http://localhost:5049/api/bookings/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getUserBookings(userId: number | undefined): Observable<BookingOut[]> {
     return this.http.get<BookingOut[]>(`${this.userApi}${userId}/bookings`);
@@ -23,15 +24,27 @@ export class BookingService {
     check_out: string;
     is_cancelled: boolean;
     total_amount: number
-  }): Observable<any> {
-    return this.http.post(this.bookingApi, booking);
+  }): Observable<BookingOut> {
+    return this.http.post<BookingOut>(this.bookingApi, booking);
   }
 
-  cancelBooking(id: number) {
-    return this.http.patch(`${this.bookingApi}${id}/cancel`,null);
+  cancelBooking(id: number): Observable<BookingOut> {
+    return this.http.patch<BookingOut>(`${this.bookingApi}${id}/cancel`, null);
   }
 
   getAllBookingsAdmin(): Observable<BookingOut[]> {
     return this.http.get<BookingOut[]>(this.bookingApi);
+  }
+
+  update(bookingId: number, updatedBooking: any): Observable<BookingOut> {
+    return this.http.put<BookingOut>(`${this.bookingApi}${bookingId}`, updatedBooking);
+  }
+
+  getById(id: number) {
+    return this.http.get<BookingOut>(`${this.bookingApi}${id}`)
+  }
+
+  deleteBooking(id: number) {
+    return this.http.delete<BookingOut>(`${this.bookingApi}${id}`)
   }
 }

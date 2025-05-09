@@ -1,0 +1,66 @@
+<!-- booking-edit.component.html -->
+<form [formGroup]="form" *ngIf="form" (ngSubmit)="onSubmit()" class="space-y-6 max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-xl font-bold text-blue-800">📝 Buchung bearbeiten</h2>
+
+    <!-- Nicht bearbeitbare Felder -->
+    <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
+        <div>
+            <label class="block text-gray-600 font-medium">Buchung-ID</label>
+            <input type="text" class="form-input bg-gray-100 cursor-not-allowed w-full" [value]="booking.id" readonly>
+        </div>
+
+        <div>
+            <label class="block text-gray-600 font-medium">Gast</label>
+            <input type="text" class="form-input bg-gray-100 cursor-not-allowed w-full" [value]="booking.user.first_name + ' ' + booking.user.last_name" readonly>
+        </div>
+
+        <div>
+            <label class="block text-gray-600 font-medium">E-Mail</label>
+            <input type="email" class="form-input bg-gray-100 cursor-not-allowed w-full" [value]="booking.user.email" readonly>
+        </div>
+
+        <div>
+            <label class="block text-gray-600 font-medium">Hotel</label>
+            <input type="text" class="form-input bg-gray-100 cursor-not-allowed w-full" [value]="booking.room.hotel.name" readonly>
+        </div>
+
+        <div>
+            <label class="block text-gray-600 font-medium">Zimmernummer</label>
+            <input type="text" class="form-input bg-gray-100 cursor-not-allowed w-full" [value]="booking.room.room_number" readonly>
+        </div>
+    </div>
+
+    <!-- Bearbeitbare Felder -->
+    <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Check-In</label>
+        <input type="date" class="form-input w-full" formControlName="check_in">
+    </div>
+
+    <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Check-Out</label>
+        <input type="date" class="form-input w-full" formControlName="check_out">
+    </div>
+
+    <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Status</label>
+        <select formControlName="is_cancelled" class="form-select w-full">
+            <option [value]="false">Aktiv</option>
+            <option [value]="true">Storniert</option>
+        </select>
+    </div>
+
+    <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700">Betrag (CHF)</label>
+        <input type="number" step="0.05" class="form-input w-full" formControlName="total_amount">
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-between mt-6 space-x-4">
+        <button type="submit" class="flex-1 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" [disabled]="form.invalid">
+            💾 Speichern
+        </button>
+        <button type="button" class="flex-1 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400" (click)="onCancel()">
+            ❌ Abbrechen
+        </button>
+    </div>
+</form>
