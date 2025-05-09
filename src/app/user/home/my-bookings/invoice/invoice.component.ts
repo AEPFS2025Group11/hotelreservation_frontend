@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, inject, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Invoice} from '../../../../models/invoice.model';
 import {InvoiceService} from '../../../../services/invoice.service';
 import {CommonModule} from '@angular/common';
@@ -14,6 +14,7 @@ import {CommonModule} from '@angular/common';
 export class InvoiceDetailComponent implements OnInit {
   invoice!: Invoice;
   error: string = '';
+  private router: Router = inject(Router);
 
   constructor(
     private route: ActivatedRoute,
@@ -30,5 +31,9 @@ export class InvoiceDetailComponent implements OnInit {
         this.error = 'Rechnung konnte nicht geladen werden.';
       }
     });
+  }
+
+  goBack(): void {
+    this.router.navigate(['/home/my-bookings']).then();
   }
 }

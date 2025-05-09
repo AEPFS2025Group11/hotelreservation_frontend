@@ -23,7 +23,7 @@ export class RoomSearchComponent implements OnInit{
 
   filteredRooms: RoomOut[] = [];
   error: string | null = null;
-  showSearch = false;
+  showSearch = true;
 
   constructor(private roomService: RoomService) {
   }

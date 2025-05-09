@@ -32,7 +32,7 @@ export class HotelSearchComponent implements OnInit {
     this.search();
   }
 
-  showSearch = false;
+  showSearch = true;
 
   toggleSearch() {
     this.showSearch = !this.showSearch;

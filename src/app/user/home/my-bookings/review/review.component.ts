@@ -56,4 +56,8 @@ export class ReviewComponent implements OnInit {
       }
     });
   }
+
+  goBack(): void {
+    this.router.navigate(['/home/my-bookings']).then();
+  }
 }
