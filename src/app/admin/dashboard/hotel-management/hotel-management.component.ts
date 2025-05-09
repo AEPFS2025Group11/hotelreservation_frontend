@@ -1,10 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { HotelOut } from '../../../models/hotel.model';
-import { AddressIn } from '../../../models/address.model';
-import { HotelService } from '../../../services/hotel.service';
-import { AddressService } from '../../../services/address.service';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {Component, inject, OnInit} from '@angular/core';
+import {HotelOut} from '../../../models/hotel.model';
+import {AddressIn} from '../../../models/address.model';
+import {HotelService} from '../../../services/hotel.service';
+import {AddressService} from '../../../services/address.service';
+import {CommonModule, ViewportScroller} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-hotel-management',
@@ -31,6 +31,7 @@ export class HotelManagementComponent implements OnInit {
 
   private addressService = inject(AddressService);
   private hotelService = inject(HotelService);
+  private viewportScroller: ViewportScroller = inject(ViewportScroller);
 
   ngOnInit() {
     this.loadHotels();
@@ -47,10 +48,11 @@ export class HotelManagementComponent implements OnInit {
     this.selectedHotel = hotel;
     this.hotelName = hotel.name;
     this.hotelStars = hotel.stars;
-    this.address = { ...hotel.address };
+    this.address = {...hotel.address};
     this.showCreateForm = true;
     this.success = '';
     this.error = '';
+    this.scrollToTop();
   }
 
   cancelEdit() {
@@ -111,5 +113,9 @@ export class HotelManagementComponent implements OnInit {
         this.error = 'Fehler beim Löschen des Hotels.';
       }
     });
+  }
+
+  scrollToTop() {
+    this.viewportScroller.scrollToPosition([0, 0]);
   }
 }

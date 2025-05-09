@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto p-6">
+<div class="max-w-7xl mx-auto p-6  space-y-10 bg-gray-50 rounded-xl shadow-inner">
   <h2 class="text-2xl font-bold text-blue-800 mb-6">🛏️ Zimmerübersicht (Admin)</h2>
 
   <button
@@ -6,12 +6,12 @@
     (click)="showCreateForm = true"
     class="bg-blue-600 text-white px-5 py-2 rounded font-medium shadow hover:bg-blue-700 transition"
   >
-    ➕ Hotel hinzufügen
+    ➕ Zimmer hinzufügen
   </button>
 
   <div *ngIf="showCreateForm || selectedRoom" class="bg-white p-6 rounded-lg shadow space-y-5">
     <h3 class="text-xl font-semibold text-gray-800">
-      {{ selectedRoom ? '✏️ Hotel bearbeiten' : '➕ Neues Hotel hinzufügen' }}
+      {{ selectedRoom ? '✏️ Zimmer bearbeiten' : '➕ Neues Zimmer hinzufügen' }}
     </h3>
 
     <div class="grid md:grid-cols-2 gap-4">
@@ -58,11 +58,28 @@
           </option>
         </select>
       </div>
+      <div class="md:col-span-2">
+        <label class="block font-medium mb-1">Ausstattung</label>
+        <div class="grid grid-cols-2 gap-2">
+          <div *ngFor="let facility of facilities">
+            <label class="inline-flex items-center">
+              <input
+                type="checkbox"
+                [value]="facility.id"
+                (change)="onFacilityChange(facility.id, $event)"
+                [checked]="selectedFacilityIds.includes(facility.id)"
+                class="form-checkbox h-4 w-4 text-blue-600"
+              />
+              <span class="ml-2">{{ facility.facility_name }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
       <div>
         <label class="block font-medium mb-1">Preis pro Nacht (CHF)</label>
         <input [(ngModel)]="pricePerNight" type="number" step="0.05" min="1"
                (input)="resetFeedback()"
-               class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+               class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"/>
       </div>
     </div>
 

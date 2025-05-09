@@ -13,7 +13,7 @@ export class BookingService {
   constructor(private http: HttpClient) {}
 
   getUserBookings(userId: number | undefined): Observable<BookingOut[]> {
-    return this.http.get<BookingOut[]>(`${this.userApi}${userId}/bookings/`);
+    return this.http.get<BookingOut[]>(`${this.userApi}${userId}/bookings`);
   }
 
   createBooking(booking: {
