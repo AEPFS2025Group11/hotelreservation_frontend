@@ -7,18 +7,23 @@ import {CommonModule} from '@angular/common';
 import {RoomOut} from '../../../../models/room.model';
 import {ReviewService} from '../../../../services/review.service';
 import {ReviewOut} from '../../../../models/review.model';
+import {MapComponent} from './map/map.component';
+import {HotelService} from '../../../../services/hotel.service';
+import {HotelOut} from '../../../../models/hotel.model';
 
 @Component({
   selector: 'app-hotel-detail',
   imports: [
     FormsModule,
     RoomCardComponent,
-    CommonModule
+    CommonModule,
+    MapComponent
   ],
   templateUrl: './hotel-detail.component.html'
 })
 export class HotelDetailComponent implements OnInit {
   hotelId!: number;
+  hotel!: HotelOut;
   rooms: RoomOut[] = [];
   checkInDate: string = '';
   checkOutDate: string = '';
@@ -29,6 +34,7 @@ export class HotelDetailComponent implements OnInit {
   private roomService: RoomService = inject(RoomService);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private reviewService: ReviewService = inject(ReviewService);
+  private hotelService: HotelService = inject(HotelService);
 
   ngOnInit(): void {
     this.hotelId = Number(this.route.snapshot.paramMap.get('id'));
@@ -37,6 +43,7 @@ export class HotelDetailComponent implements OnInit {
 
     this.loadRooms();
     this.loadReviews();
+    this.loadHotel();
   }
 
   loadReviews(): void {
@@ -67,5 +74,16 @@ export class HotelDetailComponent implements OnInit {
           console.error(err);
         }
       });
+  }
+
+  private loadHotel() {
+    this.hotelService.getById(this.hotelId).subscribe({
+      next: (data) => {
+        this.hotel = data;
+      },
+      error: (err)=> {
+        this.error = err.error.detail;
+      }
+    })
   }
 }

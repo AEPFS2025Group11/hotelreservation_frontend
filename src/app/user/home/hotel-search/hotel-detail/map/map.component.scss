@@ -1,0 +1,17 @@
+.leaflet-map {
+  height: 500px;
+  width: 100%;
+}
+
+.card-container {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  border-radius: 1rem;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}

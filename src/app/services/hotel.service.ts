@@ -60,5 +60,9 @@ export class HotelService {
     return this.http.delete<HotelOut>(`${this.apiUrl}${id}`);
   }
 
+  getById(id:number): Observable<HotelOut> {
+    return this.http.get<HotelOut>(`${this.apiUrl}${id}`)
+  }
+
 
 }

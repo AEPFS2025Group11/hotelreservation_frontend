@@ -13,8 +13,3 @@ export interface HotelOut {
   address: AddressOut
 }
 
-export interface HotelUpdate {
-  name?: string
-  stars?: number
-}
-
