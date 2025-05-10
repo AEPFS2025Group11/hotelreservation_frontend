@@ -1,7 +1,7 @@
-import {Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
-import {PaymentIn, PaymentMethod, PaymentOut} from '../../../../models/payment.model';
+import {Component, inject, OnInit} from '@angular/core';
+import {PaymentIn, PaymentMethod} from '../../../../models/payment.model';
 import {FormsModule} from '@angular/forms';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf, NgSwitch, NgSwitchCase} from '@angular/common';
 import {BookingService} from '../../../../services/booking.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PaymentService} from '../../../../services/payment.service';
@@ -11,7 +11,10 @@ import {PaymentService} from '../../../../services/payment.service';
   templateUrl: './payment.component.html',
   imports: [
     FormsModule,
-    NgIf
+    NgIf,
+    NgSwitchCase,
+    NgSwitch,
+    NgForOf
   ]
 })
 export class PaymentComponent implements OnInit {
@@ -22,6 +25,7 @@ export class PaymentComponent implements OnInit {
   private paymentService: PaymentService = inject(PaymentService)
 
   booking_id: number = 0;
+  paymentMethods = Object.values(PaymentMethod);
   error: string | null = null;
   success: string | null = null;
 
@@ -78,7 +82,7 @@ export class PaymentComponent implements OnInit {
         }
       },
       err => {
-        this.error = 'Fehler beim Laden der Buchung. Bitte versuchen Sie es später noch einmal.';
+        this.error = err.error.detail;
       }
     );
   }
@@ -86,4 +90,6 @@ export class PaymentComponent implements OnInit {
   back() {
     this.router.navigate(['home/my-bookings']).then()
   }
+
+  protected readonly PaymentMethod = PaymentMethod;
 }

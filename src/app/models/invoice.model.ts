@@ -1,4 +1,4 @@
-export interface Invoice {
+export interface InvoiceIn {
   id: number
   booking_id: number
   issue_date: string
@@ -6,8 +6,18 @@ export interface Invoice {
   status: InvoiceStatus
 }
 
+export interface InvoiceOut {
+  id: number
+  booking_id: number
+  issue_date: string
+  is_paid: number
+  amount_to_pay: number
+  total_amount: number
+  status: InvoiceStatus
+}
+
 export enum InvoiceStatus {
-  PENDING = 'PENDING',
-  PAID = 'PAID',
-  CANCELLED = 'CANCELLED'
+  Ausstehend = 'pending',
+  Bezahlt = 'paid',
+  Storniert = 'cancelled'
 }

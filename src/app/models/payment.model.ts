@@ -35,7 +35,8 @@ export enum PaymentStatus {
 export enum PaymentMethod {
   TWINT = 'twint',
   CREDIT = 'credit',
-  cash = 'cash'
+  CASH = 'cash',
+  PAYPAL = 'paypal'
 }
 
 

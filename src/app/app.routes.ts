@@ -9,7 +9,7 @@ import {HotelDetailComponent} from './user/home/hotel-search/hotel-detail/hotel-
 import {BookingComponent} from "./user/home/booking/booking.component";
 import {MyBookingsComponent} from "./user/home/my-bookings/my-bookings.component";
 import {RoomSearchComponent} from './user/home/room-search/room-search.component';
-import {InvoiceDetailComponent} from './user/home/my-bookings/invoice/invoice.component';
+import {InvoiceComponent} from './user/home/my-bookings/invoice/invoice.component';
 import {ReviewComponent} from './user/home/my-bookings/review/review.component';
 import {HotelManagementComponent} from './admin/dashboard/hotel-management/hotel-management.component';
 import {StatisticsComponent} from './admin/dashboard/statistics/statistics.component';
@@ -48,7 +48,7 @@ export const routes: Routes = [
         {path: 'rooms', component: RoomSearchComponent},
         {
           path: 'invoices/:bookingId',
-          component: InvoiceDetailComponent
+          component: InvoiceComponent
         }, {
           path: 'reviews/:bookingId',
           component: ReviewComponent

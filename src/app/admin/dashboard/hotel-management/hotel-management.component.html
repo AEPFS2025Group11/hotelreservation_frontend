@@ -14,7 +14,6 @@
       {{ selectedHotel ? '✏️ Hotel bearbeiten' : '➕ Neues Hotel hinzufügen' }}
     </h3>
 
-    <!-- Hotel Info -->
     <div class="grid md:grid-cols-2 gap-4">
       <div>
         <label class="block font-medium mb-1">Hotelname</label>
@@ -37,7 +36,6 @@
       </div>
     </div>
 
-    <!-- Address -->
     <h4 class="text-lg font-semibold mt-6">📍 Adresse</h4>
     <div class="grid md:grid-cols-3 gap-4">
       <div>
@@ -69,7 +67,6 @@
       </div>
     </div>
 
-    <!-- Actions -->
     <div class="flex justify-between mt-4">
       <button
         (click)="saveHotel()"
@@ -85,12 +82,10 @@
       </button>
     </div>
 
-    <!-- Feedback -->
     <p *ngIf="success" class="text-green-600 mt-2 font-medium">{{ success }}</p>
     <p *ngIf="error" class="text-red-600 mt-2 font-medium">{{ error }}</p>
   </div>
 
-  <!-- Table -->
   <div class="overflow-x-auto">
     <table *ngIf="hotels.length > 0" class="w-full text-sm text-left bg-white shadow rounded-lg">
       <thead class="bg-gray-100 text-xs text-gray-600 uppercase">
@@ -125,6 +120,5 @@
     </table>
   </div>
 
-  <!-- No Data -->
   <div *ngIf="hotels.length === 0" class="text-gray-500 text-center">Keine Hotels verfügbar.</div>
 </div>

@@ -47,7 +47,7 @@ export class ReviewComponent implements OnInit {
         this.submitted = true;
         this.error = '';
         setTimeout(() => {
-          this.router.navigate(['/home/hotels']).then();
+          this.router.navigate(['/home/my-bookings']).then();
         }, 1500);
       },
       error: (err) => {

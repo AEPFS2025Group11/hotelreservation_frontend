@@ -15,7 +15,6 @@
     </h3>
 
     <div class="grid md:grid-cols-2 gap-4">
-      <!-- Hotel Dropdown -->
       <div class="relative">
         <label class="block font-medium mb-1">Hotel</label>
         <input
@@ -40,7 +39,6 @@
         </ul>
       </div>
 
-      <!-- Room Number -->
       <div>
         <label class="block font-medium mb-1">Zimmernummer</label>
         <input
@@ -51,7 +49,6 @@
         />
       </div>
 
-      <!-- Room Type -->
       <div>
         <label class="block font-medium mb-1">Zimmertyp</label>
         <select
@@ -65,7 +62,6 @@
         </select>
       </div>
 
-      <!-- Facilities -->
       <div class="md:col-span-2">
         <label class="block font-medium mb-1">Ausstattung</label>
         <div class="grid grid-cols-2 gap-2">
@@ -82,7 +78,6 @@
         </div>
       </div>
 
-      <!-- Price -->
       <div>
         <label class="block font-medium mb-1">Preis pro Nacht (CHF)</label>
         <input
@@ -96,7 +91,6 @@
       </div>
     </div>
 
-    <!-- Actions -->
     <div class="flex justify-between mt-4">
       <button
         (click)="saveRoom()"
@@ -117,7 +111,6 @@
     <p *ngIf="error" class="text-red-600 mt-2 font-medium">{{ error }}</p>
   </div>
 
-  <!-- Room Table -->
   <div class="overflow-x-auto">
     <table class="w-full text-sm text-left bg-white shadow rounded-lg">
       <thead class="bg-gray-100 text-xs text-gray-600 uppercase">

@@ -54,7 +54,7 @@
             Rechnung
           </button>
           <button
-            *ngIf="!booking.is_cancelled"
+            *ngIf="!booking.is_cancelled && !booking.has_review"
             (click)="writeReview(booking.id)"
             class="text-sm text-amber-600 hover:underline"
           >

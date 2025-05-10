@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Invoice} from '../../../../models/invoice.model';
+import {InvoiceOut} from '../../../../models/invoice.model';
 import {InvoiceService} from '../../../../services/invoice.service';
 import {CommonModule} from '@angular/common';
 
@@ -11,8 +11,9 @@ import {CommonModule} from '@angular/common';
   ],
   templateUrl: './invoice.component.html'
 })
-export class InvoiceDetailComponent implements OnInit {
-  invoice!: Invoice;
+export class InvoiceComponent implements OnInit {
+
+  invoice!: InvoiceOut;
   error: string = '';
   private router: Router = inject(Router);
 
@@ -35,5 +36,9 @@ export class InvoiceDetailComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/home/my-bookings']).then();
+  }
+
+  pay_invoice(id: number) {
+    this.router.navigate(['home/my-bookings', id, 'pay']).then()
   }
 }
