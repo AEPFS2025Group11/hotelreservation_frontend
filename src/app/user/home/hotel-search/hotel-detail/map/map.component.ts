@@ -1,15 +1,15 @@
-import { AfterViewInit, Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {Component, inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import * as L from 'leaflet';
-import { HotelOut } from '../../../../../models/hotel.model';
-import { HotelService } from '../../../../../services/hotel.service';
-import { ActivatedRoute } from '@angular/router';
+import {HotelOut} from '../../../../../models/hotel.model';
+import {HotelService} from '../../../../../services/hotel.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements AfterViewInit, OnChanges, OnInit {
+export class MapComponent implements OnChanges, OnInit {
   hotelService: HotelService = inject(HotelService);
   route: ActivatedRoute = inject(ActivatedRoute);
   hotel!: HotelOut;
@@ -26,16 +26,12 @@ export class MapComponent implements AfterViewInit, OnChanges, OnInit {
     this.hotelService.getById(hotelId).subscribe({
       next: (value: HotelOut) => {
         this.hotel = value;
-        this.tryInitMap(); // Initialize map once hotel data is loaded
+        this.tryInitMap();
       },
       error: err => {
         console.error('Fehler beim Laden des Hotels:', err);
       }
     });
-  }
-
-  ngAfterViewInit(): void {
-    // No need to call tryInitMap here, as it's handled after the hotel data is loaded
   }
 
   ngOnChanges(changes: SimpleChanges): void {
